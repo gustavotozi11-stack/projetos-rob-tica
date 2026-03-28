@@ -26,5 +26,33 @@
     src="https://www.facebook.com/tr?id=700974852449522&ev=PageView&noscript=1"
     /></noscript>
     <div id="root"></div>
-  
+    <script>
+      (function() {
+        function getTimeUntilMidnight() {
+          var now = new Date();
+          var midnight = new Date(now);
+          midnight.setHours(24, 0, 0, 0);
+          var diff = Math.floor((midnight - now) / 1000);
+          var h = Math.floor(diff / 3600);
+          var m = Math.floor((diff % 3600) / 60);
+          var s = diff % 60;
+          return (h < 10 ? '0' : '') + h + ':' +
+                 (m < 10 ? '0' : '') + m + ':' +
+                 (s < 10 ? '0' : '') + s;
+        }
+
+        function applyCountdown() {
+          var el = document.querySelector('.font-mono.font-bold.text-red-100');
+          if (el) {
+            el.textContent = getTimeUntilMidnight();
+            clearInterval(waitInterval);
+            setInterval(function() {
+              el.textContent = getTimeUntilMidnight();
+            }, 1000);
+          }
+        }
+
+        var waitInterval = setInterval(applyCountdown, 100);
+      })();
+    </script>
 </body></html>
