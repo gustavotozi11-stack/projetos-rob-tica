@@ -28,31 +28,22 @@
     <div id="root"></div>
     <script>
       (function() {
-        function getTimeUntilMidnight() {
+        function getTodayDate() {
           var now = new Date();
-          var midnight = new Date(now);
-          midnight.setHours(24, 0, 0, 0);
-          var diff = Math.floor((midnight - now) / 1000);
-          var h = Math.floor(diff / 3600);
-          var m = Math.floor((diff % 3600) / 60);
-          var s = diff % 60;
-          return (h < 10 ? '0' : '') + h + ':' +
-                 (m < 10 ? '0' : '') + m + ':' +
-                 (s < 10 ? '0' : '') + s;
+          var d = String(now.getDate()).padStart(2, '0');
+          var m = String(now.getMonth() + 1).padStart(2, '0');
+          var y = now.getFullYear();
+          return d + '/' + m + '/' + y;
         }
 
-        function applyCountdown() {
-          var el = document.querySelector('.font-mono.font-bold.text-red-100');
+        function applyDate() {
+          var el = document.querySelector('.oferta-completa');
           if (el) {
-            el.textContent = getTimeUntilMidnight();
-            clearInterval(waitInterval);
-            setInterval(function() {
-              el.textContent = getTimeUntilMidnight();
-            }, 1000);
+            el.textContent = 'OFERTA VÁLIDA SÓ HOJE ' + getTodayDate();
           }
         }
 
-        var waitInterval = setInterval(applyCountdown, 100);
+        setInterval(applyDate, 200);
       })();
     </script>
 </body></html>
