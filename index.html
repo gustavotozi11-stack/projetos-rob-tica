@@ -92,4 +92,50 @@
         }, 200);
       })();
     </script>
+    <script>
+      (function() {
+        var moved = false;
+
+        function moveReceberSection() {
+          if (moved) return;
+
+          var h2 = null;
+          var allH2 = document.querySelectorAll('h2');
+          for (var i = 0; i < allH2.length; i++) {
+            if (allH2[i].textContent.trim() === 'O Que Você Vai Receber') {
+              h2 = allH2[i];
+              break;
+            }
+          }
+          if (!h2) return;
+
+          var section = h2;
+          while (section && section !== document.body) {
+            if (section.classList && section.classList.contains('py-4') && section.classList.contains('bg-white')) break;
+            section = section.parentNode;
+          }
+          if (!section || section === document.body) return;
+
+          var buttons = document.querySelectorAll('a, button');
+          var targetBtn = null;
+          for (var j = 0; j < buttons.length; j++) {
+            if (buttons[j].textContent.trim().toLowerCase().includes('quero acessar agora')) {
+              targetBtn = buttons[j];
+              break;
+            }
+          }
+          if (!targetBtn) return;
+
+          var anchor = targetBtn.closest('a') || targetBtn;
+          var btnContainer = anchor.parentNode;
+          btnContainer.parentNode.insertBefore(section, btnContainer.nextSibling);
+          moved = true;
+        }
+
+        var interval2 = setInterval(function() {
+          moveReceberSection();
+          if (moved) clearInterval(interval2);
+        }, 300);
+      })();
+    </script>
 </body></html>
