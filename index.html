@@ -64,23 +64,9 @@
           }
           if (!targetBtn) return;
 
-          // Find "O Que Você Vai Receber" section container
-          var h2 = null;
-          var allH2 = document.querySelectorAll('h2');
-          for (var j = 0; j < allH2.length; j++) {
-            if (allH2[j].textContent.trim() === 'O Que Você Vai Receber') {
-              h2 = allH2[j];
-              break;
-            }
-          }
-          if (!h2) return;
-
-          var receberSection = h2;
-          while (receberSection && receberSection !== document.body) {
-            if (receberSection.classList && receberSection.classList.contains('py-4') && receberSection.classList.contains('bg-white')) break;
-            receberSection = receberSection.parentNode;
-          }
-          if (!receberSection || receberSection === document.body) return;
+          // Find "O Que Você Vai Receber" section container by id
+          var receberSection = document.getElementById('secao-receber');
+          if (!receberSection) return;
 
           // Get the button's parent container
           var anchor = targetBtn.closest('a') || targetBtn;
