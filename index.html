@@ -48,11 +48,12 @@
     </script>
     <script>
       (function() {
-        var inserted = false;
+        var done = false;
 
-        function insertIdealSection() {
-          if (inserted) return;
+        function arrangeSections() {
+          if (done) return;
 
+          // Find first "Quero acessar agora" button
           var buttons = document.querySelectorAll('a, button');
           var targetBtn = null;
           for (var i = 0; i < buttons.length; i++) {
@@ -61,13 +62,37 @@
               break;
             }
           }
-
           if (!targetBtn) return;
 
-          var section = document.createElement('div');
-          section.style.cssText = 'background:#fff8f0;border-radius:18px;padding:32px 28px;margin:32px auto;max-width:600px;box-shadow:0 4px 24px rgba(0,0,0,0.07);font-family:inherit;';
+          // Find "O Que Você Vai Receber" section container
+          var h2 = null;
+          var allH2 = document.querySelectorAll('h2');
+          for (var j = 0; j < allH2.length; j++) {
+            if (allH2[j].textContent.trim() === 'O Que Você Vai Receber') {
+              h2 = allH2[j];
+              break;
+            }
+          }
+          if (!h2) return;
 
-          section.innerHTML = [
+          var receberSection = h2;
+          while (receberSection && receberSection !== document.body) {
+            if (receberSection.classList && receberSection.classList.contains('py-4') && receberSection.classList.contains('bg-white')) break;
+            receberSection = receberSection.parentNode;
+          }
+          if (!receberSection || receberSection === document.body) return;
+
+          // Get the button's parent container
+          var anchor = targetBtn.closest('a') || targetBtn;
+          var btnContainer = anchor.parentNode;
+
+          // Step 1: insert "O Que Você Vai Receber" right after btnContainer
+          btnContainer.parentNode.insertBefore(receberSection, btnContainer.nextSibling);
+
+          // Step 2: build and insert "Este Kit É Ideal Para Você Que…" right after "O Que Você Vai Receber"
+          var idealSection = document.createElement('div');
+          idealSection.style.cssText = 'background:#fff8f0;border-radius:18px;padding:32px 28px;margin:32px auto;max-width:600px;box-shadow:0 4px 24px rgba(0,0,0,0.07);font-family:inherit;';
+          idealSection.innerHTML = [
             '<h2 style="text-align:center;color:#1a1a2e;font-size:1.45rem;font-weight:800;margin-bottom:22px;line-height:1.3;">Este Kit É Ideal Para Você Que…</h2>',
             '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:13px;">',
             '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🤖</span><span>Quer tirar os filhos das telas sem brigas e choro</span></li>',
@@ -80,62 +105,15 @@
             '</ul>'
           ].join('');
 
-          var anchor = targetBtn.closest('a') || targetBtn;
-          var parent = anchor.parentNode;
-          parent.insertBefore(section, anchor.nextSibling);
-          inserted = true;
+          receberSection.parentNode.insertBefore(idealSection, receberSection.nextSibling);
+
+          done = true;
         }
 
         var interval = setInterval(function() {
-          insertIdealSection();
-          if (inserted) clearInterval(interval);
+          arrangeSections();
+          if (done) clearInterval(interval);
         }, 200);
-      })();
-    </script>
-    <script>
-      (function() {
-        var moved = false;
-
-        function moveReceberSection() {
-          if (moved) return;
-
-          var h2 = null;
-          var allH2 = document.querySelectorAll('h2');
-          for (var i = 0; i < allH2.length; i++) {
-            if (allH2[i].textContent.trim() === 'O Que Você Vai Receber') {
-              h2 = allH2[i];
-              break;
-            }
-          }
-          if (!h2) return;
-
-          var section = h2;
-          while (section && section !== document.body) {
-            if (section.classList && section.classList.contains('py-4') && section.classList.contains('bg-white')) break;
-            section = section.parentNode;
-          }
-          if (!section || section === document.body) return;
-
-          var buttons = document.querySelectorAll('a, button');
-          var targetBtn = null;
-          for (var j = 0; j < buttons.length; j++) {
-            if (buttons[j].textContent.trim().toLowerCase().includes('quero acessar agora')) {
-              targetBtn = buttons[j];
-              break;
-            }
-          }
-          if (!targetBtn) return;
-
-          var anchor = targetBtn.closest('a') || targetBtn;
-          var btnContainer = anchor.parentNode;
-          btnContainer.parentNode.insertBefore(section, btnContainer.nextSibling);
-          moved = true;
-        }
-
-        var interval2 = setInterval(function() {
-          moveReceberSection();
-          if (moved) clearInterval(interval2);
-        }, 300);
       })();
     </script>
 </body></html>
