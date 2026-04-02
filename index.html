@@ -75,42 +75,48 @@
     <script>
       (function() {
         function insertAcessarButton() {
-          var all = document.querySelectorAll('h2, h3, div, p, span');
-          for (var i = 0; i < all.length; i++) {
-            var txt = (all[i].textContent || '').trim();
-            if (txt.indexOf('ALGUNS DOS PROJETOS') !== -1 && all[i].children.length === 0) {
-              var target = all[i];
-              // Walk up 5 levels to get the section container
-              var section = target;
-              for (var j = 0; j < 5; j++) {
-                if (section.parentNode && section.parentNode.id !== 'root') {
-                  section = section.parentNode;
-                } else { break; }
-              }
-              if (!document.querySelector('.btn-quero-acessar')) {
-                var btnWrapper = document.createElement('div');
-                btnWrapper.style.cssText = 'text-align:center;padding:24px 16px 16px;';
-                var btn = document.createElement('a');
-                btn.className = 'btn-quero-acessar';
-                btn.href = 'https://pay.lowify.com.br/checkout?product_id=FCCDs2';
-                btn.target = '_blank';
-                btn.rel = 'noopener noreferrer';
-                btn.textContent = '🚀 QUERO ACESSAR AGORA';
-                btn.style.cssText = 'display:inline-block;background:linear-gradient(135deg,#ff6b00,#ff9500);color:#fff;font-size:1.25rem;font-weight:900;padding:18px 40px;border-radius:50px;text-decoration:none;box-shadow:0 6px 24px rgba(255,107,0,0.4);letter-spacing:1px;text-transform:uppercase;transition:transform 0.15s,box-shadow 0.15s;';
-                btn.onmouseover = function() { this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 32px rgba(255,107,0,0.55)'; };
-                btn.onmouseout = function() { this.style.transform='scale(1)'; this.style.boxShadow='0 6px 24px rgba(255,107,0,0.4)'; };
-                btn.onclick = function() {
-                  if (typeof window !== 'undefined' && window.fbq) {
-                    window.fbq('track', 'InitiateCheckout', { value: 19.99, currency: 'BRL' });
-                  }
-                };
-                btnWrapper.appendChild(btn);
-                section.parentNode.insertBefore(btnWrapper, section.nextSibling);
-              }
-              return true;
+          if (document.querySelector('.btn-quero-acessar')) return true;
+          // Find the leaf <p> with "ALGUNS DOS PROJETOS"
+          var leaf = null;
+          var candidates = document.querySelectorAll('p, span, h2, h3, h4');
+          for (var i = 0; i < candidates.length; i++) {
+            if ((candidates[i].textContent || '').indexOf('ALGUNS DOS PROJETOS') !== -1) {
+              leaf = candidates[i];
+              break;
             }
           }
-          return false;
+          if (!leaf) return false;
+          // Walk up to find the section-level container (stops when parent has id=root or has many direct children)
+          var section = leaf.parentNode;
+          while (section && section.id !== 'root') {
+            var par = section.parentNode;
+            if (!par || par.id === 'root') break;
+            // Stop walking up when the parent has multiple siblings (i.e., section is a top-level block)
+            if (par.children.length >= 3) break;
+            section = par;
+          }
+          var btnWrapper = document.createElement('div');
+          btnWrapper.style.cssText = 'text-align:center;padding:24px 16px 16px;';
+          var btn = document.createElement('a');
+          btn.className = 'btn-quero-acessar';
+          btn.href = 'https://pay.lowify.com.br/checkout?product_id=FCCDs2';
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+          btn.textContent = '🚀 QUERO ACESSAR AGORA';
+          btn.style.cssText = 'display:inline-block;background:linear-gradient(135deg,#ff6b00,#ff9500);color:#fff;font-size:1.25rem;font-weight:900;padding:18px 40px;border-radius:50px;text-decoration:none;box-shadow:0 6px 24px rgba(255,107,0,0.4);letter-spacing:1px;text-transform:uppercase;transition:transform 0.15s,box-shadow 0.15s;';
+          btn.onmouseover = function() { this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 32px rgba(255,107,0,0.55)'; };
+          btn.onmouseout = function() { this.style.transform='scale(1)'; this.style.boxShadow='0 6px 24px rgba(255,107,0,0.4)'; };
+          btn.onclick = function() {
+            if (typeof window !== 'undefined' && window.fbq) {
+              window.fbq('track', 'InitiateCheckout', { value: 19.99, currency: 'BRL' });
+            }
+          };
+          btnWrapper.appendChild(btn);
+          // Insert the button after the section container
+          if (section && section.parentNode) {
+            section.parentNode.insertBefore(btnWrapper, section.nextSibling);
+          }
+          return true;
         }
         var btnGuard = setInterval(function() {
           if (insertAcessarButton()) clearInterval(btnGuard);
