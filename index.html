@@ -398,20 +398,11 @@
             updateDots(idx);
           }, { passive: true });
 
-          // Counter
-          var counter = document.createElement('div');
-          counter.style.cssText = 'text-align:center;margin-top:8px;color:#6b7280;font-size:0.875rem;';
-          counter.textContent = 'Depoimento 1 de ' + srcs.length;
-          scrollEl.addEventListener('scroll', function() {
-            counter.textContent = 'Depoimento ' + (Math.round(scrollEl.scrollLeft / scrollEl.offsetWidth) + 1) + ' de ' + srcs.length;
-          }, { passive: true });
-
-          // Rebuild section: heading + new carousel + dots + counter
+          // Rebuild section: heading + new carousel + dots
           sectionWrap.innerHTML = '';
           if (headingBlock) sectionWrap.appendChild(headingBlock);
           sectionWrap.appendChild(scrollEl);
           sectionWrap.appendChild(dotsRow);
-          sectionWrap.appendChild(counter);
 
           return true;
         }
