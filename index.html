@@ -306,7 +306,12 @@
           var allImgs = document.querySelectorAll('img');
           var testImgs = [];
           for (var i = 0; i < allImgs.length; i++) {
-            if ((allImgs[i].src || '').indexOf('testimonial') !== -1) testImgs.push(allImgs[i].src);
+            var src = allImgs[i].src || '';
+            if (src.indexOf('testimonial') !== -1 &&
+                src.indexOf('testimonial3') === -1 &&
+                src.indexOf('testimonial4') === -1) {
+              testImgs.push(src);
+            }
           }
           if (testImgs.length === 0) return false;
 
