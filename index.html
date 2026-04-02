@@ -18,8 +18,8 @@
     fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
-    <script type="module" crossorigin="" src="js/index-Bzq_0qp-.js?v=1775138185"></script>
-    <link rel="stylesheet" crossorigin="" href="css/index-DFr47thn.css?v=1775138185">
+    <script type="module" crossorigin="" src="js/index-Bzq_0qp-.js?v=1775138500"></script>
+    <link rel="stylesheet" crossorigin="" href="css/index-DFr47thn.css?v=1775138500">
   </head>
   <body>
     <noscript><img height="1" width="1" style="display:none"
@@ -29,26 +29,47 @@
     <script>
       // Remove seção indesejada se aparecer (via cache de versão antiga)
       (function() {
+        var KILL_PHRASES = [
+          'Este Kit \u00c9 Ideal Para Voc\u00ea',
+          'Quer tirar os filhos das telas sem brigas',
+          'Busca projetos prontos, r\u00e1pidos e f\u00e1ceis',
+          'Quer ser o pai/m\u00e3e que faz os olhos',
+          'Sente que a inf\u00e2ncia dos filhos'
+        ];
+        function containsKillPhrase(el) {
+          var txt = el.textContent || '';
+          for (var k = 0; k < KILL_PHRASES.length; k++) {
+            if (txt.indexOf(KILL_PHRASES[k]) !== -1) return true;
+          }
+          return false;
+        }
         function removeIdealSection() {
-          var all = document.querySelectorAll('div, section, h2');
+          var all = document.querySelectorAll('div, section');
           for (var i = 0; i < all.length; i++) {
-            if (all[i].textContent && all[i].textContent.indexOf('Este Kit É Ideal Para Você') !== -1) {
+            if (containsKillPhrase(all[i])) {
+              // Walk up to remove the highest self-contained ancestor
               var target = all[i];
-              // Go up to find the outermost container of this section
-              while (target.parentNode && target.parentNode.id !== 'root' && !target.parentNode.classList.contains('min-h-screen')) {
-                if (target.parentNode.textContent.trim() === target.textContent.trim()) {
-                  target = target.parentNode;
-                } else {
-                  break;
-                }
+              while (
+                target.parentNode &&
+                target.parentNode.id !== 'root' &&
+                containsKillPhrase(target.parentNode) &&
+                target.parentNode.children.length === 1
+              ) {
+                target = target.parentNode;
               }
-              target.remove();
-              return;
+              if (target.parentNode) {
+                target.style.display = 'none';
+                target.remove();
+              }
+              return true;
             }
           }
+          return false;
         }
-        var guard = setInterval(removeIdealSection, 100);
-        setTimeout(function() { clearInterval(guard); }, 10000);
+        var guard = setInterval(function() {
+          removeIdealSection();
+        }, 50);
+        setTimeout(function() { clearInterval(guard); }, 15000);
       })();
     </script>
     <script>
