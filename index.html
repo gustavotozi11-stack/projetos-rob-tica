@@ -502,4 +502,38 @@
         setTimeout(function() { clearInterval(sgGuard); }, 15000);
       })();
     </script>
+    <script>
+      (function() {
+        function cleanEmojis() {
+          var done = 0;
+
+          // Remove the heart visual element and emoji from "Com amor para famílias brasileiras"
+          var allEls = document.querySelectorAll('*');
+          for (var i = 0; i < allEls.length; i++) {
+            var el = allEls[i];
+            var txt = (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3)
+              ? el.textContent : '';
+            // Remove the heart icon SVG sibling or the ❤️ emoji text node
+            if (txt.indexOf('Com amor para famílias brasileiras') !== -1) {
+              // Remove emoji from text
+              el.textContent = 'Com amor para famílias brasileiras';
+              // Also hide any preceding SVG/icon sibling
+              var prev = el.previousElementSibling;
+              if (prev) prev.style.display = 'none';
+              done++;
+            }
+            // Remove emoji from "🎓 Especialista"
+            if (txt === '🎓 Especialista') { el.textContent = 'Especialista'; done++; }
+            // Remove emoji from "🧠 Dedicação"
+            if (txt === '🧠 Dedicação') { el.textContent = 'Dedicação'; done++; }
+          }
+          return done >= 3;
+        }
+
+        var ceGuard = setInterval(function() {
+          if (cleanEmojis()) clearInterval(ceGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(ceGuard); }, 15000);
+      })();
+    </script>
 </body></html>
