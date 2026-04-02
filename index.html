@@ -302,65 +302,70 @@
     <script>
       (function() {
         function transformTestimonialsCarousel() {
-          // Find the testimonials heading
+          // Find testimonial images directly by src
+          var allImgs = document.querySelectorAll('img');
+          var testImgs = [];
+          for (var i = 0; i < allImgs.length; i++) {
+            if ((allImgs[i].src || '').indexOf('testimonial') !== -1) testImgs.push(allImgs[i].src);
+          }
+          if (testImgs.length === 0) return false;
+
+          // Find the section wrapper via the heading
           var headings = document.querySelectorAll('h2');
-          var heading = null;
-          for (var i = 0; i < headings.length; i++) {
-            if ((headings[i].textContent || '').indexOf('Depoimentos de quem') !== -1) {
-              heading = headings[i];
+          var sectionWrap = null;
+          for (var h = 0; h < headings.length; h++) {
+            if ((headings[h].textContent || '').indexOf('Depoimentos de quem') !== -1) {
+              // Walk up to the max-w-6xl container (direct child of the section)
+              var node = headings[h].parentNode;
+              while (node && node.id !== 'root') {
+                if ((node.className || '').indexOf('max-w-6xl') !== -1) { sectionWrap = node; break; }
+                node = node.parentNode;
+              }
               break;
             }
           }
-          if (!heading) return false;
+          if (!sectionWrap || sectionWrap.dataset.transformed) return !!sectionWrap;
+          sectionWrap.dataset.transformed = '1';
 
-          // Find the carousel container (relative max-w-4xl)
-          var carouselArea = heading.parentNode;
-          while (carouselArea && carouselArea.id !== 'root') {
-            if ((carouselArea.className || '').indexOf('relative') !== -1 &&
-                (carouselArea.className || '').indexOf('max-w-4xl') !== -1) break;
-            carouselArea = carouselArea.parentNode;
+          // Keep only the heading block (first child), replace everything else
+          var headingBlock = sectionWrap.firstElementChild;
+          var srcs = testImgs;
+
+          // Inject hide-scrollbar style once
+          if (!document.getElementById('dep-scroll-style')) {
+            var st = document.createElement('style');
+            st.id = 'dep-scroll-style';
+            st.textContent = '.dep-scroll::-webkit-scrollbar{display:none}';
+            document.head.appendChild(st);
           }
-          if (!carouselArea || carouselArea.id === 'root') return false;
-          if (carouselArea.dataset.transformed) return true;
-          carouselArea.dataset.transformed = '1';
 
-          // Collect all testimonial images
-          var imgs = carouselArea.querySelectorAll('img');
-          if (imgs.length === 0) return false;
-          var srcs = [];
-          for (var j = 0; j < imgs.length; j++) srcs.push(imgs[j].src);
-
-          // Build new scroll-snap carousel (same style as projects)
+          // Build scroll-snap carousel — same structure as the projects carousel
           var scrollEl = document.createElement('div');
-          scrollEl.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;border-radius:0;';
-          var style = document.createElement('style');
-          style.textContent = '.dep-scroll::-webkit-scrollbar{display:none}';
-          document.head.appendChild(style);
           scrollEl.className = 'dep-scroll';
+          scrollEl.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;';
 
           var track = document.createElement('div');
           track.style.cssText = 'display:flex;';
 
           for (var k = 0; k < srcs.length; k++) {
             var slide = document.createElement('div');
-            slide.style.cssText = 'flex-shrink:0;width:100%;scroll-snap-align:start;padding:0 8px;box-sizing:border-box;';
+            slide.style.cssText = 'flex-shrink:0;width:100%;scroll-snap-align:start;box-sizing:border-box;';
             var img = document.createElement('img');
             img.src = srcs[k];
-            img.style.cssText = 'width:100%;height:auto;display:block;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.10);object-fit:contain;';
+            // No borders, no card — same clean look as project images
+            img.style.cssText = 'width:100%;height:auto;display:block;object-fit:contain;';
             slide.appendChild(img);
             track.appendChild(slide);
           }
           scrollEl.appendChild(track);
 
-          // Navigation dots
+          // Navigation dots (same style as projects)
           var dotsRow = document.createElement('div');
           dotsRow.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:8px;margin-top:16px;';
           var dots = [];
           function updateDots(idx) {
             for (var d = 0; d < dots.length; d++) {
-              dots[d].style.background = d === idx
-                ? 'linear-gradient(135deg,#7c3aed,#2563eb)'
-                : '#d1d5db';
+              dots[d].style.background = d === idx ? 'linear-gradient(135deg,#7c3aed,#2563eb)' : '#d1d5db';
               dots[d].style.transform = d === idx ? 'scale(1.3)' : 'scale(1)';
             }
           }
@@ -368,37 +373,31 @@
             (function(idx) {
               var dot = document.createElement('button');
               dot.style.cssText = 'width:14px;height:14px;border-radius:50%;border:none;cursor:pointer;background:#d1d5db;padding:0;transition:all 0.2s;';
-              dot.onclick = function() {
-                scrollEl.scrollTo({ left: idx * scrollEl.offsetWidth, behavior: 'smooth' });
-              };
+              dot.onclick = function() { scrollEl.scrollTo({ left: idx * scrollEl.offsetWidth, behavior: 'smooth' }); };
               dots.push(dot);
               dotsRow.appendChild(dot);
             })(m);
           }
           updateDots(0);
-
-          // Update dots on scroll
           scrollEl.addEventListener('scroll', function() {
             var idx = Math.round(scrollEl.scrollLeft / scrollEl.offsetWidth);
             updateDots(idx);
           }, { passive: true });
 
-          // Counter text
+          // Counter
           var counter = document.createElement('div');
           counter.style.cssText = 'text-align:center;margin-top:8px;color:#6b7280;font-size:0.875rem;';
-          function updateCounter(idx) {
-            counter.textContent = 'Depoimento ' + (idx + 1) + ' de ' + srcs.length;
-          }
-          updateCounter(0);
+          counter.textContent = 'Depoimento 1 de ' + srcs.length;
           scrollEl.addEventListener('scroll', function() {
-            updateCounter(Math.round(scrollEl.scrollLeft / scrollEl.offsetWidth));
+            counter.textContent = 'Depoimento ' + (Math.round(scrollEl.scrollLeft / scrollEl.offsetWidth) + 1) + ' de ' + srcs.length;
           }, { passive: true });
 
-          // Replace carousel area content
-          carouselArea.innerHTML = '';
-          carouselArea.appendChild(scrollEl);
-          carouselArea.appendChild(dotsRow);
-          carouselArea.appendChild(counter);
+          // Rebuild section: heading + new carousel + dots + counter
+          sectionWrap.innerHTML = '';
+          if (headingBlock) sectionWrap.appendChild(headingBlock);
+          sectionWrap.appendChild(scrollEl);
+          sectionWrap.appendChild(dotsRow);
+          sectionWrap.appendChild(counter);
 
           return true;
         }
@@ -407,9 +406,6 @@
           if (transformTestimonialsCarousel()) clearInterval(tGuard);
         }, 200);
         setTimeout(function() { clearInterval(tGuard); }, 15000);
-
-        // Keep it persistent after React re-renders
-        setTimeout(function() { transformTestimonialsCarousel(); }, 3000);
       })();
     </script>
     <script>
