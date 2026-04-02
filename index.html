@@ -18,14 +18,39 @@
     fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
-    <script type="module" crossorigin="" src="js/index-Bzq_0qp-.js?v=1775137948"></script>
-    <link rel="stylesheet" crossorigin="" href="css/index-DFr47thn.css?v=1775137948">
+    <script type="module" crossorigin="" src="js/index-Bzq_0qp-.js?v=1775138185"></script>
+    <link rel="stylesheet" crossorigin="" href="css/index-DFr47thn.css?v=1775138185">
   </head>
   <body>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=700974852449522&ev=PageView&noscript=1"
     /></noscript>
     <div id="root"></div>
+    <script>
+      // Remove seção indesejada se aparecer (via cache de versão antiga)
+      (function() {
+        function removeIdealSection() {
+          var all = document.querySelectorAll('div, section, h2');
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].textContent && all[i].textContent.indexOf('Este Kit É Ideal Para Você') !== -1) {
+              var target = all[i];
+              // Go up to find the outermost container of this section
+              while (target.parentNode && target.parentNode.id !== 'root' && !target.parentNode.classList.contains('min-h-screen')) {
+                if (target.parentNode.textContent.trim() === target.textContent.trim()) {
+                  target = target.parentNode;
+                } else {
+                  break;
+                }
+              }
+              target.remove();
+              return;
+            }
+          }
+        }
+        var guard = setInterval(removeIdealSection, 100);
+        setTimeout(function() { clearInterval(guard); }, 10000);
+      })();
+    </script>
     <script>
       (function() {
         function getTodayDate() {
