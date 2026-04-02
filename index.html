@@ -71,7 +71,7 @@
           var projetosSection = document.getElementById('secao-projetos');
           if (!projetosSection) return;
 
-          // All elements ready — now do all insertions
+          // All elements ready — move sections into position
           var anchor = targetBtn.closest('a') || targetBtn;
           var btnContainer = anchor.parentNode;
 
@@ -80,23 +80,6 @@
 
           // 2. Move "Veja alguns dos projetos" right after "O Que Você Vai Receber"
           receberSection.parentNode.insertBefore(projetosSection, receberSection.nextSibling);
-
-          // 3. Build and insert "Este Kit É Ideal Para Você Que…" after the projects section
-          var idealSection = document.createElement('div');
-          idealSection.style.cssText = 'background:#fff8f0;border-radius:18px;padding:32px 28px;margin:32px auto;max-width:600px;box-shadow:0 4px 24px rgba(0,0,0,0.07);font-family:inherit;';
-          idealSection.innerHTML = [
-            '<h2 style="text-align:center;color:#1a1a2e;font-size:1.45rem;font-weight:800;margin-bottom:22px;line-height:1.3;">Este Kit É Ideal Para Você Que…</h2>',
-            '<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:13px;">',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🤖</span><span>Quer tirar os filhos das telas sem brigas e choro</span></li>',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🔧</span><span>Busca projetos prontos, rápidos e fáceis de fazer em casa</span></li>',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">❤️</span><span>Deseja criar momentos de conexão real com seus filhos</span></li>',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🧠</span><span>Quer despertar a curiosidade e o lado científico da criança</span></li>',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">⏰</span><span>Sente que a infância dos filhos está passando rápido demais</span></li>',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🏠</span><span>Precisa de ideias criativas que não exijam materiais caros</span></li>',
-            '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🚀</span><span>Quer ser o pai/mãe que faz os olhos das crianças brilharem</span></li>',
-            '</ul>'
-          ].join('');
-          projetosSection.parentNode.insertBefore(idealSection, projetosSection.nextSibling);
 
           done = true;
         }
