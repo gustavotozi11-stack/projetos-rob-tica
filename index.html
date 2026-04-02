@@ -349,12 +349,26 @@
 
           for (var k = 0; k < srcs.length; k++) {
             var slide = document.createElement('div');
-            slide.style.cssText = 'flex-shrink:0;width:100%;scroll-snap-align:start;box-sizing:border-box;';
+            slide.style.cssText = 'flex-shrink:0;width:100%;scroll-snap-align:start;box-sizing:border-box;padding:0 8px;text-align:center;';
+
+            // Stars
+            var stars = document.createElement('div');
+            stars.style.cssText = 'display:flex;justify-content:center;gap:4px;margin-bottom:12px;';
+            stars.innerHTML = '⭐⭐⭐⭐⭐';
+
+            // Image with rounded borders
             var img = document.createElement('img');
             img.src = srcs[k];
-            // No borders, no card — same clean look as project images
-            img.style.cssText = 'width:100%;height:auto;display:block;object-fit:contain;';
+            img.style.cssText = 'width:100%;height:auto;display:block;object-fit:contain;border-radius:16px;';
+
+            // "Cliente Satisfeita" label
+            var label = document.createElement('div');
+            label.style.cssText = 'font-weight:700;color:#2563eb;font-size:1rem;margin-top:12px;';
+            label.textContent = '⭐ Cliente Satisfeita';
+
+            slide.appendChild(stars);
             slide.appendChild(img);
+            slide.appendChild(label);
             track.appendChild(slide);
           }
           scrollEl.appendChild(track);
