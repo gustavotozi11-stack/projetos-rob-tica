@@ -244,26 +244,11 @@
             slidesContainer = slidesContainer.parentNode;
           }
 
-          // Find the dots (bolinhas): small round elements with bg-gray-300 or rounded-full near the carousel
-          // Walk up from slidesContainer to find a parent that also contains the dots
-          var grid = slidesContainer;
-          var dotEl = null;
-          var allEls = document.querySelectorAll('button, span, div');
-          for (var d = 0; d < allEls.length; d++) {
-            var cls = allEls[d].className || '';
-            if (typeof cls === 'string' && cls.indexOf('bg-gray-300') !== -1 && cls.indexOf('rounded-full') !== -1) {
-              dotEl = allEls[d];
-              break;
-            }
-          }
-          if (dotEl) {
-            // Walk up from slidesContainer until we find an ancestor that also contains the dot
-            var candidate = slidesContainer;
-            while (candidate && candidate.id !== 'root') {
-              if (candidate.contains(dotEl)) { grid = candidate; break; }
-              candidate = candidate.parentNode;
-            }
-          }
+          // The carousel wrapper is the direct parent of the slides container.
+          // It contains both the slides and the navigation dots (bolinhas).
+          var grid = slidesContainer.parentNode && slidesContainer.parentNode.id !== 'root'
+            ? slidesContainer.parentNode
+            : slidesContainer;
 
           var btnWrapper = document.createElement('div');
           btnWrapper.style.cssText = 'text-align:center;padding:24px 16px 16px;background:#ffffff;';
