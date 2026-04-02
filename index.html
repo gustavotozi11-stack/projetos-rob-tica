@@ -511,20 +511,18 @@
           var allEls = document.querySelectorAll('*');
           for (var i = 0; i < allEls.length; i++) {
             var el = allEls[i];
-            var txt = (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3)
-              ? el.textContent : '';
-            // Remove the heart icon SVG sibling or the ❤️ emoji text node
-            if (txt.indexOf('Com amor para famílias brasileiras') !== -1) {
-              // Hide just this element and its immediate parent wrapper
-              el.style.display = 'none';
-              var prev = el.previousElementSibling;
-              if (prev) prev.style.display = 'none';
+            // Match any small element whose text contains the phrase
+            if (!done && el.children.length <= 2 && (el.textContent || '').indexOf('Com amor para famílias brasileiras') !== -1) {
+              // Walk up one level to hide the full row/container
+              var hideTarget = el.parentNode && el.parentNode.children.length <= 4 ? el.parentNode : el;
+              hideTarget.style.display = 'none';
               done++;
             }
             // Remove emoji from "🎓 Especialista"
-            if (txt === '🎓 Especialista') { el.textContent = 'Especialista'; done++; }
+            var elTxt = (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) ? el.textContent : '';
+            if (elTxt === '🎓 Especialista') { el.textContent = 'Especialista'; done++; }
             // Remove emoji from "🧠 Dedicação"
-            if (txt === '🧠 Dedicação') { el.textContent = 'Dedicação'; done++; }
+            if (elTxt === '🧠 Dedicação') { el.textContent = 'Dedicação'; done++; }
           }
           return done >= 3;
         }
