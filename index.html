@@ -538,6 +538,37 @@
     </script>
     <script>
       (function() {
+        function addCredentialsSpacing() {
+          var allEls = document.querySelectorAll('h3');
+          for (var i = 0; i < allEls.length; i++) {
+            if ((allEls[i].textContent || '').indexOf('+2.500') !== -1) {
+              var grid = allEls[i].parentNode && allEls[i].parentNode.parentNode;
+              if (grid) {
+                var section = grid.parentNode;
+                while (section && section.id !== 'root') {
+                  var par = section.parentNode;
+                  if (!par || par.id === 'root') break;
+                  if (par.children.length >= 2) break;
+                  section = par;
+                }
+                if (section && !section.dataset.credSpaced) {
+                  section.dataset.credSpaced = '1';
+                  section.style.paddingBottom = '96px';
+                }
+              }
+              return true;
+            }
+          }
+          return false;
+        }
+        var csGuard = setInterval(function() {
+          if (addCredentialsSpacing()) clearInterval(csGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(csGuard); }, 15000);
+      })();
+    </script>
+    <script>
+      (function() {
         function addAnaSilvaSpacing() {
           var headings = document.querySelectorAll('h2');
           for (var i = 0; i < headings.length; i++) {
