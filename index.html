@@ -305,11 +305,14 @@
           // Find testimonial images directly by src
           var allImgs = document.querySelectorAll('img');
           var testImgs = [];
+          var seen = {};
           for (var i = 0; i < allImgs.length; i++) {
             var src = allImgs[i].src || '';
             if (src.indexOf('testimonial') !== -1 &&
                 src.indexOf('testimonial3') === -1 &&
-                src.indexOf('testimonial4') === -1) {
+                src.indexOf('testimonial4') === -1 &&
+                !seen[src]) {
+              seen[src] = true;
               testImgs.push(src);
             }
           }
