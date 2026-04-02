@@ -63,6 +63,86 @@
       })();
     </script>
     <script>
+      (function() {
+        var ITEM_ICONS = {
+          'Vídeo passo a passo': { icon: '🎬', color: '#ef4444' },
+          'crianças de 4 a 12': { icon: '👧', color: '#f97316' },
+          'celular, tablet':     { icon: '📱', color: '#3b82f6' },
+          'vitalício':           { icon: '♾️', color: '#8b5cf6' },
+          'WhatsApp':            { icon: '💬', color: '#22c55e' },
+          'E-mail':              { icon: '✉️', color: '#0ea5e9' }
+        };
+
+        function enhanceMaterialSection() {
+          // Find the h3 title
+          var h3 = null;
+          var all = document.querySelectorAll('h3');
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].textContent.indexOf('Material Completo em Vídeo') !== -1) {
+              h3 = all[i]; break;
+            }
+          }
+          if (!h3) return false;
+          // Walk up to find the card container (the one with background:#f8fafc)
+          var card = h3.parentNode;
+          while (card && !card.style.background && card.id !== 'root') card = card.parentNode;
+          if (!card || card.id === 'root') { card = h3.parentNode; }
+
+          if (card.dataset.enhanced) return true;
+          card.dataset.enhanced = '1';
+
+          // Style the card
+          card.style.background = 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)';
+          card.style.borderRadius = '20px';
+          card.style.boxShadow = '0 8px 32px rgba(59,130,246,0.10)';
+          card.style.border = '1.5px solid #bfdbfe';
+          card.style.padding = '24px 20px 20px';
+          card.style.margin = '8px 0';
+
+          // Add a visual header badge
+          var badge = document.createElement('div');
+          badge.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;';
+          badge.innerHTML = '<span style="font-size:2rem;">🤖</span><span style="background:linear-gradient(90deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.1rem;font-weight:900;letter-spacing:0.5px;">TUDO QUE VOCÊ RECEBE</span><span style="font-size:2rem;">🚀</span>';
+          card.insertBefore(badge, card.firstChild);
+
+          // Enhance each checklist item
+          var items = card.querySelectorAll('div');
+          for (var j = 0; j < items.length; j++) {
+            var item = items[j];
+            var txt = item.textContent || '';
+            var matched = null;
+            for (var key in ITEM_ICONS) {
+              if (txt.indexOf(key) !== -1) { matched = ITEM_ICONS[key]; break; }
+            }
+            if (!matched) continue;
+            if (item.dataset.vis) continue;
+            item.dataset.vis = '1';
+            // Style the row
+            item.style.background = 'white';
+            item.style.borderRadius = '12px';
+            item.style.padding = '10px 14px';
+            item.style.marginBottom = '8px';
+            item.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
+            item.style.border = '1px solid #f1f5f9';
+            item.style.display = 'flex';
+            item.style.alignItems = 'center';
+            item.style.gap = '12px';
+            // Add colored icon pill before the ✅
+            var pill = document.createElement('span');
+            pill.textContent = matched.icon;
+            pill.style.cssText = 'font-size:1.4rem;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:' + matched.color + '18;flex-shrink:0;';
+            item.insertBefore(pill, item.firstChild);
+          }
+          return true;
+        }
+
+        var visGuard = setInterval(function() {
+          if (enhanceMaterialSection()) clearInterval(visGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(visGuard); }, 15000);
+      })();
+    </script>
+    <script>
       // Remove seção indesejada se aparecer (via cache de versão antiga)
       (function() {
         var KILL_PHRASES = [
