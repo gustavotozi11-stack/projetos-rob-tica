@@ -66,6 +66,15 @@
 
         var bgGuard = setInterval(function() {
           applyWhiteBg();
+          // Shrink hero subtitle text
+          var ps = document.querySelectorAll('p');
+          for (var k = 0; k < ps.length; k++) {
+            if ((ps[k].textContent || '').indexOf('Com +100 projetos prontos') !== -1) {
+              ps[k].style.fontSize = '0.85rem';
+              ps[k].style.lineHeight = '1.5';
+              break;
+            }
+          }
         }, 150);
         setTimeout(function() { clearInterval(bgGuard); }, 15000);
       })();
