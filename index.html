@@ -441,4 +441,65 @@
         setTimeout(function() { clearInterval(fbGuard); }, 15000);
       })();
     </script>
+    <script>
+      (function() {
+        function stackGrids() {
+          var done = 0;
+
+          // 1. Stack the credentials grid (+2.500 Famílias, 🎓 Especialista, 🧠 Dedicação)
+          var allEls = document.querySelectorAll('h3');
+          for (var i = 0; i < allEls.length; i++) {
+            if ((allEls[i].textContent || '').indexOf('+2.500') !== -1) {
+              var grid = allEls[i].parentNode && allEls[i].parentNode.parentNode;
+              if (grid && !grid.dataset.stacked) {
+                grid.dataset.stacked = '1';
+                grid.style.display = 'flex';
+                grid.style.flexDirection = 'column';
+                grid.style.alignItems = 'center';
+                grid.style.gap = '24px';
+                done++;
+              }
+              break;
+            }
+          }
+
+          // 2. Stack the ✅ items grid in the CTA section (Entrega Imediata, Bônus Exclusivos…)
+          var divs = document.querySelectorAll('div');
+          for (var j = 0; j < divs.length; j++) {
+            var txt = divs[j].textContent || '';
+            if (txt.indexOf('✅ Entrega Imediata') !== -1 &&
+                txt.indexOf('✅ Bônus Exclusivos') !== -1 &&
+                txt.indexOf('✅ Garantia') !== -1 &&
+                !divs[j].dataset.stacked) {
+              divs[j].dataset.stacked = '1';
+              divs[j].style.display = 'flex';
+              divs[j].style.flexDirection = 'column';
+              divs[j].style.alignItems = 'center';
+              divs[j].style.gap = '12px';
+              done++;
+              break;
+            }
+          }
+
+          // 3. Add bottom spacing to the orange CTA section
+          var sections = document.querySelectorAll('div');
+          for (var k = 0; k < sections.length; k++) {
+            var cls = sections[k].className || '';
+            if (cls.indexOf('from-orange-500') !== -1 && cls.indexOf('via-red-500') !== -1 && !sections[k].dataset.spaced) {
+              sections[k].dataset.spaced = '1';
+              sections[k].style.paddingBottom = '48px';
+              done++;
+              break;
+            }
+          }
+
+          return done >= 3;
+        }
+
+        var sgGuard = setInterval(function() {
+          if (stackGrids()) clearInterval(sgGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(sgGuard); }, 15000);
+      })();
+    </script>
 </body></html>
