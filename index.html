@@ -536,4 +536,33 @@
         setTimeout(function() { clearInterval(ceGuard); }, 15000);
       })();
     </script>
+    <script>
+      (function() {
+        function addAnaSilvaSpacing() {
+          var headings = document.querySelectorAll('h2');
+          for (var i = 0; i < headings.length; i++) {
+            if ((headings[i].textContent || '').indexOf('Prof. Ana Silva') !== -1) {
+              // Walk up to find the section-level container
+              var section = headings[i].parentNode;
+              while (section && section.id !== 'root') {
+                var par = section.parentNode;
+                if (!par || par.id === 'root') break;
+                if (par.children.length >= 2) break;
+                section = par;
+              }
+              if (section && !section.dataset.anaSpaced) {
+                section.dataset.anaSpaced = '1';
+                section.style.paddingBottom = '56px';
+              }
+              return true;
+            }
+          }
+          return false;
+        }
+        var asGuard = setInterval(function() {
+          if (addAnaSilvaSpacing()) clearInterval(asGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(asGuard); }, 15000);
+      })();
+    </script>
 </body></html>
