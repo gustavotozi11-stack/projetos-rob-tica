@@ -233,16 +233,36 @@
           }
           if (projImgs.length === 0) return false;
 
-          // Find the grid container: walk up from the first proj image
-          // until we find a node that contains ALL proj_ images
-          var grid = projImgs[0].parentNode;
-          while (grid && grid.id !== 'root') {
+          // Find the container that holds ALL proj_ images (the slides div)
+          var slidesContainer = projImgs[0].parentNode;
+          while (slidesContainer && slidesContainer.id !== 'root') {
             var allInside = true;
             for (var j = 0; j < projImgs.length; j++) {
-              if (!grid.contains(projImgs[j])) { allInside = false; break; }
+              if (!slidesContainer.contains(projImgs[j])) { allInside = false; break; }
             }
             if (allInside) break;
-            grid = grid.parentNode;
+            slidesContainer = slidesContainer.parentNode;
+          }
+
+          // Find the dots (bolinhas): small round elements with bg-gray-300 or rounded-full near the carousel
+          // Walk up from slidesContainer to find a parent that also contains the dots
+          var grid = slidesContainer;
+          var dotEl = null;
+          var allEls = document.querySelectorAll('button, span, div');
+          for (var d = 0; d < allEls.length; d++) {
+            var cls = allEls[d].className || '';
+            if (typeof cls === 'string' && cls.indexOf('bg-gray-300') !== -1 && cls.indexOf('rounded-full') !== -1) {
+              dotEl = allEls[d];
+              break;
+            }
+          }
+          if (dotEl) {
+            // Walk up from slidesContainer until we find an ancestor that also contains the dot
+            var candidate = slidesContainer;
+            while (candidate && candidate.id !== 'root') {
+              if (candidate.contains(dotEl)) { grid = candidate; break; }
+              candidate = candidate.parentNode;
+            }
           }
 
           var btnWrapper = document.createElement('div');
