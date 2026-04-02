@@ -224,25 +224,27 @@
       (function() {
         function insertAcessarButton() {
           if (document.querySelector('.btn-quero-acessar')) return true;
-          // Find the leaf <p> with "ALGUNS DOS PROJETOS"
-          var leaf = null;
-          var candidates = document.querySelectorAll('p, span, h2, h3, h4');
-          for (var i = 0; i < candidates.length; i++) {
-            if ((candidates[i].textContent || '').indexOf('Olha só o que seu filho vai construir') !== -1) {
-              leaf = candidates[i];
-              break;
+
+          // Collect all proj_ images
+          var imgs = document.querySelectorAll('img');
+          var projImgs = [];
+          for (var i = 0; i < imgs.length; i++) {
+            if ((imgs[i].src || '').indexOf('proj_') !== -1) projImgs.push(imgs[i]);
+          }
+          if (projImgs.length === 0) return false;
+
+          // Find the grid container: walk up from the first proj image
+          // until we find a node that contains ALL proj_ images
+          var grid = projImgs[0].parentNode;
+          while (grid && grid.id !== 'root') {
+            var allInside = true;
+            for (var j = 0; j < projImgs.length; j++) {
+              if (!grid.contains(projImgs[j])) { allInside = false; break; }
             }
+            if (allInside) break;
+            grid = grid.parentNode;
           }
-          if (!leaf) return false;
-          // Walk up to find the section-level container (stops when parent has id=root or has many direct children)
-          var section = leaf.parentNode;
-          while (section && section.id !== 'root') {
-            var par = section.parentNode;
-            if (!par || par.id === 'root') break;
-            // Stop walking up when the parent has multiple siblings (i.e., section is a top-level block)
-            if (par.children.length >= 3) break;
-            section = par;
-          }
+
           var btnWrapper = document.createElement('div');
           btnWrapper.style.cssText = 'text-align:center;padding:24px 16px 16px;background:#ffffff;';
           var btn = document.createElement('a');
@@ -260,9 +262,9 @@
             }
           };
           btnWrapper.appendChild(btn);
-          // Insert the button after the section container
-          if (section && section.parentNode) {
-            section.parentNode.insertBefore(btnWrapper, section.nextSibling);
+          // Insert the button right after the images grid
+          if (grid && grid.parentNode) {
+            grid.parentNode.insertBefore(btnWrapper, grid.nextSibling);
           }
           return true;
         }
