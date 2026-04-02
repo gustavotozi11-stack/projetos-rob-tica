@@ -507,23 +507,32 @@
         function cleanEmojis() {
           var done = 0;
 
-          // Remove the heart visual element and emoji from "Com amor para famílias brasileiras"
+          // Remove "Com amor para famílias brasileiras" by walking text nodes safely
+          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+          var node;
+          while ((node = walker.nextNode())) {
+            if (node.nodeValue && node.nodeValue.indexOf('Com amor para famílias brasileiras') !== -1) {
+              var target = node.parentElement;
+              while (target && target !== document.body && target.parentElement && target.parentElement !== document.body && target.parentElement.children.length <= 3) {
+                target = target.parentElement;
+              }
+              if (target && target !== document.body && target.style) {
+                target.style.display = 'none';
+                done++;
+              }
+              break;
+            }
+          }
+
+          // Remove emoji from "🎓 Especialista" and "🧠 Dedicação"
           var allEls = document.querySelectorAll('*');
           for (var i = 0; i < allEls.length; i++) {
             var el = allEls[i];
-            // Match any small element whose text contains the phrase
-            if (!done && el.children.length <= 2 && (el.textContent || '').indexOf('Com amor para famílias brasileiras') !== -1) {
-              // Walk up one level to hide the full row/container
-              var hideTarget = el.parentNode && el.parentNode.children.length <= 4 ? el.parentNode : el;
-              hideTarget.style.display = 'none';
-              done++;
-            }
-            // Remove emoji from "🎓 Especialista"
             var elTxt = (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) ? el.textContent : '';
             if (elTxt === '🎓 Especialista') { el.textContent = 'Especialista'; done++; }
-            // Remove emoji from "🧠 Dedicação"
             if (elTxt === '🧠 Dedicação') { el.textContent = 'Dedicação'; done++; }
           }
+
           return done >= 3;
         }
 
