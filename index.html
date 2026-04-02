@@ -66,6 +66,15 @@
 
         var bgGuard = setInterval(function() {
           applyWhiteBg();
+          // Match "O Que Você Vai Receber" font size to "Veja alguns dos projetos" heading
+          var h2s = document.querySelectorAll('h2');
+          for (var q = 0; q < h2s.length; q++) {
+            if ((h2s[q].textContent || '').indexOf('O Que Voc') !== -1 && (h2s[q].textContent || '').indexOf('Vai Receber') !== -1) {
+              h2s[q].style.fontSize = '1.5rem';
+              break;
+            }
+          }
+
           // Increase spacing between top bar and headline
           var h1s = document.querySelectorAll('h1');
           for (var h = 0; h < h1s.length; h++) {
