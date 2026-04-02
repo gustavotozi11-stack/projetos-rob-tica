@@ -64,18 +64,24 @@
           }
           if (!targetBtn) return;
 
-          // Find "O Que Você Vai Receber" section container by id
+          // Wait for ALL required sections before doing anything
           var receberSection = document.getElementById('secao-receber');
           if (!receberSection) return;
 
-          // Get the button's parent container
+          var projetosSection = document.getElementById('secao-projetos');
+          if (!projetosSection) return;
+
+          // All elements ready — now do all insertions
           var anchor = targetBtn.closest('a') || targetBtn;
           var btnContainer = anchor.parentNode;
 
-          // Step 1: insert "O Que Você Vai Receber" right after btnContainer
+          // 1. Move "O Que Você Vai Receber" right after the button container
           btnContainer.parentNode.insertBefore(receberSection, btnContainer.nextSibling);
 
-          // Step 2: build and insert "Este Kit É Ideal Para Você Que…" right after "O Que Você Vai Receber"
+          // 2. Move "Veja alguns dos projetos" right after "O Que Você Vai Receber"
+          receberSection.parentNode.insertBefore(projetosSection, receberSection.nextSibling);
+
+          // 3. Build and insert "Este Kit É Ideal Para Você Que…" after the projects section
           var idealSection = document.createElement('div');
           idealSection.style.cssText = 'background:#fff8f0;border-radius:18px;padding:32px 28px;margin:32px auto;max-width:600px;box-shadow:0 4px 24px rgba(0,0,0,0.07);font-family:inherit;';
           idealSection.innerHTML = [
@@ -90,16 +96,7 @@
             '<li style="display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:#2d2d2d;"><span style="font-size:1.4rem;">🚀</span><span>Quer ser o pai/mãe que faz os olhos das crianças brilharem</span></li>',
             '</ul>'
           ].join('');
-
-          // Step 3: move "Veja alguns dos projetos" section right after receberSection
-          var projetosSection = document.getElementById('secao-projetos');
-
-          if (projetosSection) {
-            receberSection.parentNode.insertBefore(projetosSection, receberSection.nextSibling);
-            receberSection.parentNode.insertBefore(idealSection, projetosSection.nextSibling);
-          } else {
-            receberSection.parentNode.insertBefore(idealSection, receberSection.nextSibling);
-          }
+          projetosSection.parentNode.insertBefore(idealSection, projetosSection.nextSibling);
 
           done = true;
         }
