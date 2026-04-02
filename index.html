@@ -91,22 +91,8 @@
             '</ul>'
           ].join('');
 
-          // Step 3: find "Veja alguns dos projetos" section and insert after receberSection
-          var projetosSection = null;
-          var allH2s = document.querySelectorAll('h2');
-          for (var k = 0; k < allH2s.length; k++) {
-            if (allH2s[k].textContent.includes('Veja alguns dos projetos')) {
-              var el = allH2s[k];
-              while (el && el !== document.body) {
-                if (el.classList && el.classList.contains('py-8') && el.classList.contains('pb-4')) {
-                  projetosSection = el;
-                  break;
-                }
-                el = el.parentNode;
-              }
-              break;
-            }
-          }
+          // Step 3: move "Veja alguns dos projetos" section right after receberSection
+          var projetosSection = document.getElementById('secao-projetos');
 
           if (projetosSection) {
             receberSection.parentNode.insertBefore(projetosSection, receberSection.nextSibling);
