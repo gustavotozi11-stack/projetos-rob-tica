@@ -1,4 +1,30 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const l of document.querySelectorAll('link[rel="modulepreload"]'))r(l);new MutationObserver(l=>{for(const o of l)if(o.type==="childList")for(const i of o.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function n(l){const o={};return l.integrity&&(o.integrity=l.integrity),l.referrerPolicy&&(o.referrerPolicy=l.referrerPolicy),l.crossOrigin==="use-credentials"?o.credentials="include":l.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function r(l){if(l.ep)return;l.ep=!0;const o=n(l);fetch(l.href,o)}})();var Wu={exports:{}},tl={},Qu={exports:{}},R={};/**
+(function(){
+var KILL=[
+'Este Kit É Ideal Para Você',
+'Quer tirar os filhos das telas sem brigas',
+'Busca projetos prontos, rápidos e fáceis de fazer',
+'Quer ser o pai/mãe que faz os olhos',
+'Sente que a infância dos filhos está passando'
+];
+function killIt(){
+var els=document.querySelectorAll('div,section');
+for(var i=0;i<els.length;i++){
+var t=els[i].textContent||'';
+for(var k=0;k<KILL.length;k++){
+if(t.indexOf(KILL[k])!==-1){
+var node=els[i];
+while(node.parentNode&&node.parentNode.id!=='root'&&(node.parentNode.textContent||'').indexOf(KILL[k])!==-1&&node.parentNode.children.length===1){node=node.parentNode;}
+node.style.display='none';
+try{node.parentNode.removeChild(node);}catch(e){}
+return;
+}
+}
+}
+}
+var t=setInterval(killIt,50);
+setTimeout(function(){clearInterval(t);},20000);
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',killIt);}else{killIt();}
+})();(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const l of document.querySelectorAll('link[rel="modulepreload"]'))r(l);new MutationObserver(l=>{for(const o of l)if(o.type==="childList")for(const i of o.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function n(l){const o={};return l.integrity&&(o.integrity=l.integrity),l.referrerPolicy&&(o.referrerPolicy=l.referrerPolicy),l.crossOrigin==="use-credentials"?o.credentials="include":l.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function r(l){if(l.ep)return;l.ep=!0;const o=n(l);fetch(l.href,o)}})();var Wu={exports:{}},tl={},Qu={exports:{}},R={};/**
  * @license React
  * react.production.min.js
  *
