@@ -515,11 +515,9 @@
               ? el.textContent : '';
             // Remove the heart icon SVG sibling or the ❤️ emoji text node
             if (txt.indexOf('Com amor para famílias brasileiras') !== -1) {
-              // Remove emoji from text
-              el.textContent = 'Com amor para famílias brasileiras';
-              // Also hide any preceding SVG/icon sibling
-              var prev = el.previousElementSibling;
-              if (prev) prev.style.display = 'none';
+              // Hide the entire parent container for this line
+              var container = el.parentNode || el;
+              container.style.display = 'none';
               done++;
             }
             // Remove emoji from "🎓 Especialista"
