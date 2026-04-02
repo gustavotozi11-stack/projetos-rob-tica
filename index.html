@@ -369,21 +369,15 @@
             img.src = srcs[k];
             img.style.cssText = 'width:80%;max-width:420px;height:auto;display:block;object-fit:contain;border-radius:16px;margin:0 auto;';
 
-            // "Cliente Satisfeita" label
-            var label = document.createElement('div');
-            label.style.cssText = 'font-weight:700;color:#2563eb;font-size:1rem;margin-top:12px;';
-            label.textContent = '⭐ Cliente Satisfeita';
-
             slide.appendChild(stars);
             slide.appendChild(img);
-            slide.appendChild(label);
             track.appendChild(slide);
           }
           scrollEl.appendChild(track);
 
           // Navigation dots (same style as projects)
           var dotsRow = document.createElement('div');
-          dotsRow.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:8px;margin-top:16px;';
+          dotsRow.style.cssText = 'display:flex;justify-content:center;align-items:center;gap:8px;margin-top:16px;margin-bottom:32px;';
           var dots = [];
           function updateDots(idx) {
             for (var d = 0; d < dots.length; d++) {
