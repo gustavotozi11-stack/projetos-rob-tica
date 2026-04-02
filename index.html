@@ -46,48 +46,4 @@
         setInterval(applyDate, 200);
       })();
     </script>
-    <script>
-      (function() {
-        var done = false;
-
-        function arrangeSections() {
-          if (done) return;
-
-          // Find first "Quero acessar agora" button
-          var buttons = document.querySelectorAll('a, button');
-          var targetBtn = null;
-          for (var i = 0; i < buttons.length; i++) {
-            if (buttons[i].textContent.trim().toLowerCase().includes('quero acessar agora')) {
-              targetBtn = buttons[i];
-              break;
-            }
-          }
-          if (!targetBtn) return;
-
-          // Wait for ALL required sections before doing anything
-          var receberSection = document.getElementById('secao-receber');
-          if (!receberSection) return;
-
-          var projetosSection = document.getElementById('secao-projetos');
-          if (!projetosSection) return;
-
-          // All elements ready — move sections into position
-          var anchor = targetBtn.closest('a') || targetBtn;
-          var btnContainer = anchor.parentNode;
-
-          // 1. Move "O Que Você Vai Receber" right after the button container
-          btnContainer.parentNode.insertBefore(receberSection, btnContainer.nextSibling);
-
-          // 2. Move "Veja alguns dos projetos" right after "O Que Você Vai Receber"
-          receberSection.parentNode.insertBefore(projetosSection, receberSection.nextSibling);
-
-          done = true;
-        }
-
-        var interval = setInterval(function() {
-          arrangeSections();
-          if (done) clearInterval(interval);
-        }, 200);
-      })();
-    </script>
 </body></html>
