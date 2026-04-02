@@ -45,7 +45,8 @@
           for (var i = 0; i < els.length; i++) {
             var cls = els[i].className;
             if (typeof cls !== 'string') continue;
-            var isSectionBg = (cls.includes('from-purple-50') || cls.includes('from-gray-50') || cls.includes('from-blue-50') || cls.includes('to-purple-50') || cls.includes('to-blue-50') || cls.includes('to-orange-50')) && cls.includes('overflow-hidden');
+            var hasBgColor = cls.includes('from-purple-50') || cls.includes('from-gray-50') || cls.includes('from-blue-50') || cls.includes('to-purple-50') || cls.includes('to-blue-50') || cls.includes('to-orange-50') || cls.includes('from-white') || cls.includes('bg-gray-50') || cls.includes('bg-blue-50') || cls.includes('bg-purple-50') || cls.includes('bg-slate-50');
+            var isSectionBg = hasBgColor && (cls.includes('py-') || cls.includes('overflow-hidden')) && !cls.includes('rounded') && !cls.includes('text-') && !cls.includes('px-12');
             if (isSectionBg) {
               els[i].style.background = 'white';
               els[i].style.backgroundImage = 'none';
