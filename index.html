@@ -20,12 +20,48 @@
     <!-- End Meta Pixel Code -->
     <script type="module" crossorigin="" src="js/index-Bzq_0qp-.js?v=1775138500"></script>
     <link rel="stylesheet" crossorigin="" href="css/index-DFr47thn.css?v=1775138500">
+    <style>
+      body, #root { background: #ffffff !important; }
+    </style>
   </head>
   <body>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=700974852449522&ev=PageView&noscript=1"
     /></noscript>
     <div id="root"></div>
+    <script>
+      (function() {
+        function applyWhiteBg() {
+          // Make section backgrounds white (only large overflow-hidden containers, not buttons/badges)
+          var els = document.querySelectorAll('[class]');
+          for (var i = 0; i < els.length; i++) {
+            var cls = els[i].className;
+            if (typeof cls !== 'string') continue;
+            var isSectionBg = (cls.includes('from-purple-50') || cls.includes('from-gray-50') || cls.includes('from-blue-50') || cls.includes('to-purple-50') || cls.includes('to-blue-50') || cls.includes('to-orange-50')) && cls.includes('overflow-hidden');
+            if (isSectionBg) {
+              els[i].style.background = 'white';
+              els[i].style.backgroundImage = 'none';
+            }
+            // Hide decorative floating blobs
+            var isBlob = cls.includes('rounded-full') && cls.includes('opacity-20') && cls.includes('absolute');
+            if (isBlob) els[i].style.display = 'none';
+          }
+
+          // Reduce spacing above #combos (between "O Que Você Vai Receber" and first button)
+          var combos = document.getElementById('combos');
+          if (combos) {
+            combos.style.paddingTop = '4px';
+            var prev = combos.previousElementSibling;
+            if (prev) prev.style.paddingBottom = '8px';
+          }
+        }
+
+        var bgGuard = setInterval(function() {
+          applyWhiteBg();
+        }, 150);
+        setTimeout(function() { clearInterval(bgGuard); }, 15000);
+      })();
+    </script>
     <script>
       // Remove seção indesejada se aparecer (via cache de versão antiga)
       (function() {
