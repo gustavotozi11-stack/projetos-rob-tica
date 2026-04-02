@@ -102,6 +102,42 @@
       })();
     </script>
     <script>
+      (function() {
+        var VIDEO_ICON_SVG = '<div style="width:64px;height:64px;background:#2563eb;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">'
+          + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:34px;height:34px;">'
+          + '<polygon points="23 7 16 12 23 17 23 7"/>'
+          + '<rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>'
+          + '</svg></div>';
+
+        function replaceVideoEmoji() {
+          var h3 = null;
+          var all = document.querySelectorAll('h3');
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].textContent.indexOf('Material Completo em Vídeo') !== -1) { h3 = all[i]; break; }
+          }
+          if (!h3) return false;
+
+          var card = h3.parentNode;
+          if (card.dataset.videoIconDone) return true;
+
+          var divs = card.querySelectorAll('div');
+          for (var j = 0; j < divs.length; j++) {
+            if (divs[j].textContent.trim() === '🎥') {
+              divs[j].innerHTML = VIDEO_ICON_SVG;
+              card.dataset.videoIconDone = '1';
+              return true;
+            }
+          }
+          return false;
+        }
+
+        var iconGuard = setInterval(function() {
+          if (replaceVideoEmoji()) clearInterval(iconGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(iconGuard); }, 15000);
+      })();
+    </script>
+    <script>
       // Remove seção indesejada se aparecer (via cache de versão antiga)
       (function() {
         var KILL_PHRASES = [
