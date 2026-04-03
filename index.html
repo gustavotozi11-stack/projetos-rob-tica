@@ -80,6 +80,9 @@
                 var cls = sn.className || '';
                 if (/\bpy-\d|\bpt-\d/.test(cls)) {
                   sn.style.paddingTop = '4px';
+                  // Also reduce the bottom of the preceding section (contains the CTA button)
+                  var prevSec = sn.previousElementSibling;
+                  if (prevSec) prevSec.style.paddingBottom = '4px';
                   break;
                 }
                 sn = sn.parentNode;
