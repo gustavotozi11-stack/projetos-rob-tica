@@ -696,25 +696,22 @@
           var bonusSection = document.getElementById('bonus-section');
           if (!bonusSection) return false;
 
-          // Find testimonials section via the heading
-          var headings = document.querySelectorAll('h2');
-          var testimonialsSection = null;
-          for (var i = 0; i < headings.length; i++) {
-            if ((headings[i].textContent || '').indexOf('Depoimentos de quem') !== -1) {
-              var node = headings[i];
-              while (node && node.parentNode && node.parentNode.id !== 'root') {
-                if (node.parentNode.children.length >= 2) break;
-                node = node.parentNode;
-              }
-              testimonialsSection = node.parentNode ? node : null;
-              break;
-            }
-          }
-          if (!testimonialsSection || !testimonialsSection.parentNode) return false;
-          if (testimonialsSection === bonusSection.nextSibling) return true;
+          // Wait for the testimonials carousel to be built (dep-scroll class)
+          var carousel = document.querySelector('.dep-scroll');
+          if (!carousel) return false;
 
-          // Move testimonials to right after the bonus section
-          bonusSection.parentNode.insertBefore(testimonialsSection, bonusSection.nextSibling);
+          // Find the full section that contains the carousel — walk up to a
+          // direct child of the layout root (same level as bonusSection)
+          var target = carousel;
+          var bsParent = bonusSection.parentNode;
+          while (target && target.parentNode && target.parentNode !== bsParent) {
+            target = target.parentNode;
+          }
+          if (!target || target.parentNode !== bsParent) return false;
+          if (target === bonusSection.nextSibling) return true;
+
+          // Move entire testimonials section right after the bonus section
+          bsParent.insertBefore(target, bonusSection.nextSibling);
           return true;
         }
 
