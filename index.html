@@ -215,6 +215,24 @@
     </script>
     <script>
       (function() {
+        function addHeadlineSpacing() {
+          var all = document.querySelectorAll('h1,h2,h3');
+          for (var i = 0; i < all.length; i++) {
+            if ((all[i].textContent || '').indexOf('TIRE SEU FILHO DAS TELAS') !== -1) {
+              all[i].style.marginBottom = '1.25rem';
+              return true;
+            }
+          }
+          return false;
+        }
+        var hlGuard = setInterval(function() {
+          if (addHeadlineSpacing()) clearInterval(hlGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(hlGuard); }, 15000);
+      })();
+    </script>
+    <script>
+      (function() {
         function reduceHeroSubtitleMargin() {
           var ps = document.querySelectorAll('p');
           for (var i = 0; i < ps.length; i++) {
