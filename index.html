@@ -690,4 +690,38 @@
         setTimeout(function() { clearInterval(bsGuard); }, 15000);
       })();
     </script>
+    <script>
+      (function() {
+        function moveTestimonialsAfterBonus() {
+          var bonusSection = document.getElementById('bonus-section');
+          if (!bonusSection) return false;
+
+          // Find testimonials section via the heading
+          var headings = document.querySelectorAll('h2');
+          var testimonialsSection = null;
+          for (var i = 0; i < headings.length; i++) {
+            if ((headings[i].textContent || '').indexOf('Depoimentos de quem') !== -1) {
+              var node = headings[i];
+              while (node && node.parentNode && node.parentNode.id !== 'root') {
+                if (node.parentNode.children.length >= 2) break;
+                node = node.parentNode;
+              }
+              testimonialsSection = node.parentNode ? node : null;
+              break;
+            }
+          }
+          if (!testimonialsSection || !testimonialsSection.parentNode) return false;
+          if (testimonialsSection === bonusSection.nextSibling) return true;
+
+          // Move testimonials to right after the bonus section
+          bonusSection.parentNode.insertBefore(testimonialsSection, bonusSection.nextSibling);
+          return true;
+        }
+
+        var mtGuard = setInterval(function() {
+          if (moveTestimonialsAfterBonus()) clearInterval(mtGuard);
+        }, 200);
+        setTimeout(function() { clearInterval(mtGuard); }, 15000);
+      })();
+    </script>
 </body></html>
