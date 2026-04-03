@@ -213,6 +213,24 @@
       })();
     </script>
     <script>
+      (function() {
+        function reduceHeroSubtitleMargin() {
+          var ps = document.querySelectorAll('p');
+          for (var i = 0; i < ps.length; i++) {
+            if ((ps[i].textContent || '').indexOf('Com +100 projetos prontos') !== -1) {
+              ps[i].style.marginBottom = '0.5rem';
+              return true;
+            }
+          }
+          return false;
+        }
+        var heroMarginGuard = setInterval(function() {
+          if (reduceHeroSubtitleMargin()) clearInterval(heroMarginGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(heroMarginGuard); }, 15000);
+      })();
+    </script>
+    <script>
       // Remove seção indesejada se aparecer (via cache de versão antiga)
       (function() {
         var KILL_PHRASES = [
