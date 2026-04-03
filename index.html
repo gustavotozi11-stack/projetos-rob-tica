@@ -74,6 +74,16 @@
             if ((h2s[q].textContent || '').indexOf('O Que Voc') !== -1 && (h2s[q].textContent || '').indexOf('Vai Receber') !== -1) {
               h2s[q].style.fontSize = '1.875rem';
               h2s[q].style.textTransform = 'uppercase';
+              // Walk up looking for a section/div that has Tailwind py- or pt- spacing to reduce
+              var sn = h2s[q].parentNode;
+              for (var up = 0; up < 8 && sn && sn.tagName !== 'BODY'; up++) {
+                var cls = sn.className || '';
+                if (/\bpy-\d|\bpt-\d/.test(cls)) {
+                  sn.style.paddingTop = '12px';
+                  break;
+                }
+                sn = sn.parentNode;
+              }
               break;
             }
           }
