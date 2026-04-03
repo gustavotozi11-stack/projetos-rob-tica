@@ -618,12 +618,9 @@
           }
           if (!secondBtn) return false;
 
-          // Walk up to find a good insertion point (the section wrapper)
-          var insertAfter = secondBtn.parentNode;
-          while (insertAfter && insertAfter.parentNode && insertAfter.parentNode.children.length === 1) {
-            insertAfter = insertAfter.parentNode;
-          }
-          if (!insertAfter || !insertAfter.parentNode) return false;
+          // Insert before the #combos section
+          var combos = document.getElementById('combos');
+          if (!combos || !combos.parentNode) return false;
 
           var bonuses = [
             {
@@ -680,7 +677,7 @@
           });
 
           section.innerHTML = html;
-          insertAfter.parentNode.insertBefore(section, insertAfter.nextSibling);
+          combos.parentNode.insertBefore(section, combos);
           return true;
         }
 
