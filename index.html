@@ -189,6 +189,30 @@
       })();
     </script>
     <script>
+      (function() {
+        function reduceVaiReceberPadding() {
+          var h2s = document.querySelectorAll('h2');
+          for (var i = 0; i < h2s.length; i++) {
+            if ((h2s[i].textContent || '').indexOf('Vai Receber') !== -1) {
+              var section = h2s[i];
+              while (section && section.id !== 'root') {
+                if (section.className && typeof section.className === 'string' && section.className.indexOf('py-8') !== -1) {
+                  section.style.paddingTop = '0.75rem';
+                  return true;
+                }
+                section = section.parentNode;
+              }
+            }
+          }
+          return false;
+        }
+        var padGuard = setInterval(function() {
+          if (reduceVaiReceberPadding()) clearInterval(padGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(padGuard); }, 15000);
+      })();
+    </script>
+    <script>
       // Remove seção indesejada se aparecer (via cache de versão antiga)
       (function() {
         var KILL_PHRASES = [
