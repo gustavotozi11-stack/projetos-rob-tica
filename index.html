@@ -197,7 +197,8 @@
               var section = h2s[i];
               while (section && section.id !== 'root') {
                 if (section.className && typeof section.className === 'string' && section.className.indexOf('py-8') !== -1) {
-                  section.style.paddingTop = '0.75rem';
+                  section.style.paddingTop = '0';
+                  section.style.marginTop = '0';
                   return true;
                 }
                 section = section.parentNode;
