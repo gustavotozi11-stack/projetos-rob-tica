@@ -73,6 +73,7 @@
           for (var q = 0; q < h2s.length; q++) {
             if ((h2s[q].textContent || '').indexOf('O Que Voc') !== -1 && (h2s[q].textContent || '').indexOf('Vai Receber') !== -1) {
               h2s[q].style.fontSize = '1.875rem';
+              h2s[q].style.textTransform = 'uppercase';
               break;
             }
           }
