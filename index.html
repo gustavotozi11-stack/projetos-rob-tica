@@ -74,6 +74,15 @@
             if ((h2s[q].textContent || '').indexOf('O Que Voc') !== -1 && (h2s[q].textContent || '').indexOf('Vai Receber') !== -1) {
               h2s[q].style.fontSize = '1.875rem';
               h2s[q].style.textTransform = 'uppercase';
+              // Walk up to the section wrapper and reduce top spacing
+              var secNode = h2s[q].parentNode;
+              while (secNode && secNode.parentNode && secNode.parentNode.id !== 'root') {
+                secNode = secNode.parentNode;
+              }
+              if (secNode) {
+                secNode.style.paddingTop = '8px';
+                secNode.style.marginTop = '0';
+              }
               break;
             }
           }
