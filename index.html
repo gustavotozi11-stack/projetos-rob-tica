@@ -625,30 +625,35 @@
           var bonuses = [
             {
               num: '1',
+              img: '/images/bonus1.png',
               title: 'Guia de Robótica para Iniciantes',
               price: 'R$47',
               desc: 'Um guia completo pra você e seu filho darem os primeiros passos na robótica — sem precisar saber nada antes. É só seguir o passo a passo e começar!'
             },
             {
               num: '2',
+              img: '/images/bonus2.png',
               title: '100 Truques de Mágica Passo a Passo',
               price: 'R$37',
               desc: '100 truques prontos pra você surpreender seu filho na hora — sem precisar ser mágico. É só seguir o passo a passo e arrasar!'
             },
             {
               num: '3',
+              img: '/images/bonus3.png',
               title: '27 Mágicas com Cartas para Aprender em Casa',
               price: 'R$27',
               desc: 'Mágicas prontas pra fazer com seu filho usando só um baralho — simples, rápidas e que deixam as crianças pedindo mais!'
             },
             {
               num: '4',
+              img: '/images/bonus4.png',
               title: 'Piadas Infantis — Para Rir com Pais e Filhos',
               price: 'R$17',
               desc: 'Uma coleção de piadas infantis pra transformar qualquer momento em gargalhada — perfeito pra criar memórias felizes em família!'
             },
             {
               num: '5',
+              img: '/images/bonus5.png',
               title: '100 Atividades Criativas — Diversão e Aprendizado em Família',
               price: 'R$37',
               desc: '100 atividades prontas pra fazer em família — criativas, educativas e que tiram as crianças das telas de vez!'
@@ -663,17 +668,15 @@
             '<h2 style="font-size:2.5rem;font-weight:900;color:#ff6b00;line-height:1.2;margin-bottom:32px;text-transform:uppercase;">5 BÔNUS INCRÍVEIS</h2>';
 
           bonuses.forEach(function(b) {
-            html += '<div style="background:#fffbf5;border:2px solid #ff6b00;border-radius:16px;padding:20px 20px 16px;margin-bottom:16px;text-align:left;position:relative;overflow:hidden;">' +
-              '<div style="display:flex;align-items:flex-start;gap:14px;">' +
-              '<div style="min-width:40px;height:40px;background:linear-gradient(135deg,#ff6b00,#ff9500);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1.1rem;flex-shrink:0;">' + b.num + '</div>' +
-              '<div>' +
-              '<p style="font-weight:900;font-size:1rem;color:#1a1a2e;margin:0 0 4px;">Bônus ' + b.num + ' — ' + b.title + '</p>' +
-              '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
+            html += '<div style="background:#fffbf5;border:2px solid #ff6b00;border-radius:16px;padding:20px 20px 16px;margin-bottom:16px;text-align:center;overflow:hidden;">' +
+              '<img src="' + b.img + '" alt="' + b.title + '" style="width:160px;height:auto;margin:0 auto 12px;display:block;" />' +
+              '<p style="font-weight:900;font-size:1rem;color:#1a1a2e;margin:0 0 6px;text-align:left;">Bônus ' + b.num + ' — ' + b.title + '</p>' +
+              '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;text-align:left;">' +
               '<span style="font-size:0.85rem;color:#999;text-decoration:line-through;">' + b.price + '</span>' +
               '<span style="background:#22c55e;color:#fff;font-weight:900;font-size:0.85rem;padding:2px 10px;border-radius:20px;">Grátis</span>' +
               '</div>' +
-              '<p style="font-size:0.9rem;color:#555;margin:0;line-height:1.5;">' + b.desc + '</p>' +
-              '</div></div></div>';
+              '<p style="font-size:0.9rem;color:#555;margin:0;line-height:1.5;text-align:left;">' + b.desc + '</p>' +
+              '</div>';
           });
 
           section.innerHTML = html;
