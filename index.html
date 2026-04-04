@@ -453,21 +453,26 @@
           section.id = 'projects-list-section';
           section.style.cssText = 'background:#fff;padding:40px 16px 48px;text-align:center;';
 
+          var CHECK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15.5 9.5"/></svg>';
+
           var html = '<div style="max-width:480px;margin:0 auto;">'
-            + '<h2 style="font-size:1.5rem;font-weight:900;color:#1a1a2e;text-transform:uppercase;margin:0 0 6px;line-height:1.3;">O QUE SEU FILHO VAI CONSEGUIR FAZER?</h2>'
-            + '<p style="font-size:0.95rem;color:#6b7280;margin:0 0 24px;">Rob\u00f4s, m\u00e1quinas e brinquedos funcionais como:</p>'
-            + '<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">';
+            + '<div style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:16px;padding:28px 24px;">'
+            + '<h2 style="font-size:1.35rem;font-weight:900;color:#1a1a2e;text-transform:uppercase;margin:0 0 4px;line-height:1.3;text-align:center;">O QUE SEU FILHO VAI CONSEGUIR FAZER?</h2>'
+            + '<p style="font-size:0.9rem;color:#6b7280;margin:0 0 20px;text-align:center;">Rob\u00f4s, m\u00e1quinas e brinquedos funcionais como:</p>'
+            + '<ul style="list-style:none;margin:0;padding:0;">';
 
           projects.forEach(function(p, i) {
             var isLast = i === projects.length - 1;
-            html += '<div style="background:' + (isLast ? 'linear-gradient(135deg,#ff6b00,#ff9500)' : '#f3f4f6') + ';'
-              + 'color:' + (isLast ? '#fff' : '#1a1a2e') + ';'
-              + 'font-size:0.9rem;font-weight:' + (isLast ? '900' : '600') + ';'
-              + 'padding:10px 18px;border-radius:50px;border:' + (isLast ? 'none' : '1px solid #e5e7eb') + ';">'
-              + p + '</div>';
+            if (isLast) {
+              html += '<li style="display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #e5e7eb;margin-top:4px;font-size:1rem;font-weight:900;color:#ff6b00;">'
+                + CHECK + '<span>' + p + '</span></li>';
+            } else {
+              html += '<li style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:0.95rem;font-weight:600;color:#1a1a2e;">'
+                + CHECK + '<span>' + p + '</span></li>';
+            }
           });
 
-          html += '</div></div>';
+          html += '</ul></div></div>';
           section.innerHTML = html;
           insertAfter.parentNode.insertBefore(section, insertAfter.nextSibling);
           return true;
