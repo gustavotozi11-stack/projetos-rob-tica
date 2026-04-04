@@ -863,10 +863,22 @@
                 headings[i].style.fontSize = '1.4rem';
               }
               if (section) {
+                var allSectionEls = section.querySelectorAll('*');
+                for (var e = 0; e < allSectionEls.length; e++) {
+                  var elTxt = allSectionEls[e].textContent || '';
+                  if (elTxt.indexOf('desenvolvimento infantil') !== -1 && allSectionEls[e].children.length === 0) {
+                    var dedNode = allSectionEls[e].parentNode;
+                    if (dedNode) {
+                      dedNode.style.marginBottom = '24px';
+                      dedNode.style.paddingBottom = '8px';
+                    }
+                    break;
+                  }
+                }
                 var paras = section.querySelectorAll('p');
                 for (var p = 0; p < paras.length; p++) {
                   if ((paras[p].textContent || '').indexOf('Educa') !== -1) {
-                    paras[p].style.marginBottom = '12px';
+                    paras[p].style.marginBottom = '20px';
                     paras[p].style.paddingBottom = '0';
                     paras[p].style.fontSize = '1.05rem';
                     var node = paras[p].parentNode;
