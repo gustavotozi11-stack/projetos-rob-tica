@@ -1119,9 +1119,12 @@
           var heads = document.querySelectorAll('h2');
           for (var i = 0; i < heads.length; i++) {
             if ((heads[i].textContent || '').indexOf('Depoimentos de quem') !== -1) {
-              var node = heads[i];
-              while (node && node.parentNode && node.parentNode.id !== 'root') node = node.parentNode;
-              if (node && node.style) { node.style.background = GRAY; done++; }
+              var node = heads[i].parentNode;
+              for (var up = 0; up < 8 && node && node.id !== 'root'; up++) {
+                var cls = node.className || '';
+                if (/\bpy-\d/.test(cls)) { node.style.background = GRAY; done++; break; }
+                node = node.parentNode;
+              }
               break;
             }
           }
