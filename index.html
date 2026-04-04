@@ -348,6 +348,33 @@
     </script>
     <script>
       (function() {
+        function removeVaiReceberSection() {
+          var h2s = document.querySelectorAll('h2');
+          for (var i = 0; i < h2s.length; i++) {
+            var txt = h2s[i].textContent || '';
+            if (txt.indexOf('O Que Voc') !== -1 && txt.indexOf('Vai Receber') !== -1) {
+              // Walk up max 10 levels to find the section container (has py- class)
+              var node = h2s[i].parentNode;
+              for (var up = 0; up < 10 && node && node.tagName !== 'BODY'; up++) {
+                var cls = node.className || '';
+                if (typeof cls === 'string' && /\bpy-\d/.test(cls)) {
+                  node.style.display = 'none';
+                  return true;
+                }
+                node = node.parentNode;
+              }
+            }
+          }
+          return false;
+        }
+        var vrGuard = setInterval(function() {
+          if (removeVaiReceberSection()) clearInterval(vrGuard);
+        }, 100);
+        setTimeout(function() { clearInterval(vrGuard); }, 15000);
+      })();
+    </script>
+    <script>
+      (function() {
         function insertAcessarButton() {
           if (document.querySelector('.btn-quero-acessar')) return true;
 
