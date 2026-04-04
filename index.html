@@ -301,24 +301,35 @@
     <script>
       (function() {
         function removeCtaSection() {
-          var buttons = document.querySelectorAll('button');
-          for (var i = 0; i < buttons.length; i++) {
-            var txt = (buttons[i].textContent || '');
-            if (txt.indexOf('ESCOLHER COMBO') !== -1) {
-              var target = buttons[i];
-              // Walk up max 6 levels to find the section container, stop before #root
-              for (var up = 0; up < 6; up++) {
-                if (!target.parentNode || target.parentNode.id === 'root') break;
+          var removed = 0;
+          // Target by orange gradient background class
+          var divs = document.querySelectorAll('div');
+          for (var i = 0; i < divs.length; i++) {
+            var cls = divs[i].className || '';
+            if (cls.indexOf('from-orange-500') !== -1 && cls.indexOf('via-red-500') !== -1) {
+              var target = divs[i];
+              // Walk up to the section-level container (direct child of root or layout wrapper)
+              while (target.parentNode && target.parentNode.id !== 'root' && target.parentNode.children.length <= 2) {
                 target = target.parentNode;
               }
-              if (target && target.parentNode && target.parentNode.id !== 'root') {
-                target.style.display = 'none';
-                target.remove();
-              }
-              return true;
+              target.style.display = 'none';
+              target.remove();
+              removed++;
+              break;
             }
           }
-          return false;
+          // Also hide by text content as fallback
+          var allDivs = document.querySelectorAll('div, section');
+          for (var j = 0; j < allDivs.length; j++) {
+            var txt = allDivs[j].textContent || '';
+            if (txt.indexOf('N\u00e3o perca esta oportunidade') !== -1 && txt.indexOf('ESCOLHER COMBO') !== -1) {
+              allDivs[j].style.display = 'none';
+              allDivs[j].remove();
+              removed++;
+              break;
+            }
+          }
+          return removed > 0;
         }
         var ctaGuard = setInterval(function() {
           if (removeCtaSection()) clearInterval(ctaGuard);
