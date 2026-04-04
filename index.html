@@ -905,4 +905,83 @@
         setTimeout(function() { clearInterval(mtGuard); }, 15000);
       })();
     </script>
+    <script>
+      (function() {
+        function insertFaq() {
+          if (document.getElementById('faq-section')) return true;
+          var root = document.getElementById('root');
+          if (!root) return false;
+
+          var faqs = [
+            {
+              q: 'Como eu recebo o Kit Rob\u00f3tica Kids?',
+              a: 'Voc\u00ea recebe acesso imediato pelo WhatsApp e E-mail. Assim que o pagamento aprovar voc\u00ea recebe o link para download na hora.'
+            },
+            {
+              q: 'Preciso esperar envio? Chega pelos Correios?',
+              a: 'N\u00e3o. \u00c9 100% digital. Voc\u00ea acessa e baixa na hora \u2014 sem espera.'
+            },
+            {
+              q: 'Precisa de material diferente ou caro?',
+              a: 'N\u00e3o. Todos os projetos usam materiais simples que voc\u00ea j\u00e1 tem em casa como papel\u00e3o, cola, tesoura e palitos.'
+            },
+            {
+              q: 'Serve mesmo para 4 a 12 anos?',
+              a: 'Sim. Os projetos s\u00e3o organizados por faixa et\u00e1ria \u2014 sempre na medida certa para seu filho.'
+            },
+            {
+              q: 'Quanto tempo leva cada projeto?',
+              a: 'A maioria leva entre 20 e 40 minutos \u2014 perfeito para o p\u00f3s-escola ou fim de semana.'
+            },
+            {
+              q: 'Vai fazer muita bagu\u00e7a?',
+              a: 'Os projetos usam materiais simples e de f\u00e1cil limpeza. Voc\u00ea tamb\u00e9m recebe o b\u00f4nus Modo Sem Bagu\u00e7a com projetos selecionados para quem quer praticidade.'
+            },
+            {
+              q: '\u00c9 seguro para crian\u00e7as?',
+              a: 'Sim com supervis\u00e3o adulta. Quando algum projeto exigir cuidado extra isso j\u00e1 vem sinalizado com instru\u00e7\u00f5es claras.'
+            },
+            {
+              q: 'Preciso entender de rob\u00f3tica para fazer?',
+              a: 'N\u00e3o. Os projetos s\u00e3o para iniciantes \u2014 voc\u00ea recebe v\u00eddeo passo a passo simples de cada projeto e o Guia do Pequeno Engenheiro para come\u00e7ar do zero.'
+            },
+            {
+              q: 'Meu filho \u00e9 viciado em tela \u2014 isso realmente ajuda?',
+              a: 'Sim. Quando as crian\u00e7as descobrem que podem construir rob\u00f4s de verdade elas naturalmente largam o celular por conta pr\u00f3pria.'
+            },
+            {
+              q: 'Tem garantia?',
+              a: 'Sim. Voc\u00ea tem 7 dias de garantia para testar. Se n\u00e3o gostar \u00e9 s\u00f3 pedir reembolso dentro do prazo. Sem briga. Sem burocracia.'
+            }
+          ];
+
+          var section = document.createElement('div');
+          section.id = 'faq-section';
+          section.style.cssText = 'background:#fff;padding:48px 16px 64px;';
+
+          var html = '<div style="max-width:640px;margin:0 auto;">'
+            + '<h2 style="font-size:1.75rem;font-weight:900;color:#1a1a2e;text-align:center;text-transform:uppercase;margin-bottom:32px;">Perguntas Frequentes</h2>';
+
+          faqs.forEach(function(faq, idx) {
+            html += '<div style="border:1px solid #e5e7eb;border-radius:12px;margin-bottom:12px;overflow:hidden;">'
+              + '<button onclick="(function(btn){var ans=btn.nextElementSibling;var icon=btn.querySelector(\'.faq-icon\');var open=ans.style.display!==\'none\';ans.style.display=open?\'none\':\'block\';icon.textContent=open?\'+\':\'-\';})(this)" style="width:100%;background:#f9fafb;border:none;padding:16px 20px;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;">'
+              + '<span style="font-size:0.95rem;font-weight:700;color:#1a1a2e;line-height:1.4;">' + faq.q + '</span>'
+              + '<span class="faq-icon" style="font-size:1.4rem;font-weight:700;color:#ff6b00;flex-shrink:0;line-height:1;">+</span>'
+              + '</button>'
+              + '<div style="display:none;padding:16px 20px;background:#fff;font-size:0.92rem;color:#4b5563;line-height:1.6;">' + faq.a + '</div>'
+              + '</div>';
+          });
+
+          html += '</div>';
+          section.innerHTML = html;
+          root.appendChild(section);
+          return true;
+        }
+
+        var faqGuard = setInterval(function() {
+          if (insertFaq()) clearInterval(faqGuard);
+        }, 200);
+        setTimeout(function() { clearInterval(faqGuard); }, 15000);
+      })();
+    </script>
 </body></html>
