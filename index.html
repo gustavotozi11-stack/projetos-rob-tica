@@ -308,7 +308,6 @@
             var cls = divs[i].className || '';
             if (cls.indexOf('from-orange-500') !== -1 && cls.indexOf('via-red-500') !== -1) {
               var target = divs[i];
-              // Walk up to the section-level container (direct child of root or layout wrapper)
               while (target.parentNode && target.parentNode.id !== 'root' && target.parentNode.children.length <= 2) {
                 target = target.parentNode;
               }
@@ -318,13 +317,29 @@
               break;
             }
           }
-          // Also hide by text content as fallback
+          // Remove "Não perca esta oportunidade" section
           var allDivs = document.querySelectorAll('div, section');
           for (var j = 0; j < allDivs.length; j++) {
             var txt = allDivs[j].textContent || '';
             if (txt.indexOf('N\u00e3o perca esta oportunidade') !== -1 && txt.indexOf('ESCOLHER COMBO') !== -1) {
               allDivs[j].style.display = 'none';
               allDivs[j].remove();
+              removed++;
+              break;
+            }
+          }
+          // Remove "CHEGA DIRETO NO SEU EMAIL" — target smallest element containing it
+          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+          var node;
+          while ((node = walker.nextNode())) {
+            if ((node.nodeValue || '').indexOf('CHEGA DIRETO NO SEU EMAIL') !== -1) {
+              var target3 = node.parentElement;
+              // Walk up max 4 levels to get a block-level container
+              for (var up = 0; up < 4; up++) {
+                if (!target3 || !target3.parentElement || target3.parentElement.id === 'root') break;
+                target3 = target3.parentElement;
+              }
+              if (target3) { target3.style.display = 'none'; target3.remove(); }
               removed++;
               break;
             }
