@@ -260,10 +260,7 @@
           'Quer tirar os filhos das telas sem brigas',
           'Busca projetos prontos, r\u00e1pidos e f\u00e1ceis',
           'Quer ser o pai/m\u00e3e que faz os olhos',
-          'Sente que a inf\u00e2ncia dos filhos',
-          'N\u00e3o perca esta oportunidade',
-          'ESCOLHER COMBO PREMIUM',
-          'ESCOLHER COMBO B\u00c1SICO'
+          'Sente que a inf\u00e2ncia dos filhos'
         ];
         function containsKillPhrase(el) {
           var txt = el.textContent || '';
@@ -299,6 +296,34 @@
           removeIdealSection();
         }, 50);
         setTimeout(function() { clearInterval(guard); }, 15000);
+      })();
+    </script>
+    <script>
+      (function() {
+        function removeCtaSection() {
+          var buttons = document.querySelectorAll('button');
+          for (var i = 0; i < buttons.length; i++) {
+            var txt = (buttons[i].textContent || '');
+            if (txt.indexOf('ESCOLHER COMBO') !== -1) {
+              var target = buttons[i];
+              // Walk up max 6 levels to find the section container, stop before #root
+              for (var up = 0; up < 6; up++) {
+                if (!target.parentNode || target.parentNode.id === 'root') break;
+                target = target.parentNode;
+              }
+              if (target && target.parentNode && target.parentNode.id !== 'root') {
+                target.style.display = 'none';
+                target.remove();
+              }
+              return true;
+            }
+          }
+          return false;
+        }
+        var ctaGuard = setInterval(function() {
+          if (removeCtaSection()) clearInterval(ctaGuard);
+        }, 50);
+        setTimeout(function() { clearInterval(ctaGuard); }, 15000);
       })();
     </script>
     <script>
