@@ -854,8 +854,13 @@
                   paras[p].style.marginBottom = '4px';
                   if ((paras[p].textContent || '').indexOf('Educa') !== -1) {
                     paras[p].style.marginBottom = '0';
-                    var textBlock = paras[p].parentNode;
-                    if (textBlock) textBlock.style.marginBottom = '0';
+                    paras[p].style.paddingBottom = '0';
+                    var node = paras[p].parentNode;
+                    while (node && node !== section) {
+                      node.style.marginBottom = '0';
+                      node.style.paddingBottom = '0';
+                      node = node.parentNode;
+                    }
                   }
                 }
                 headings[i].style.marginBottom = '4px';
