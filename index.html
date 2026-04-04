@@ -1210,6 +1210,12 @@
           if (insertFaq()) clearInterval(faqGuard);
         }, 200);
         setTimeout(function() { clearInterval(faqGuard); }, 15000);
+        setTimeout(function() {
+          if (!document.getElementById('faq-section')) insertFaq();
+        }, 1500);
+        setTimeout(function() {
+          if (!document.getElementById('faq-section')) insertFaq();
+        }, 3000);
       })();
     </script>
     <script>
