@@ -1110,4 +1110,34 @@
         setTimeout(function() { clearInterval(faqGuard); }, 15000);
       })();
     </script>
+    <script>
+      (function() {
+        var GRAY = '#f3f4f6';
+        function applyGrayBg() {
+          var done = 0;
+
+          var heads = document.querySelectorAll('h2');
+          for (var i = 0; i < heads.length; i++) {
+            if ((heads[i].textContent || '').indexOf('Depoimentos de quem') !== -1) {
+              var node = heads[i];
+              while (node && node.parentNode && node.parentNode.id !== 'root') node = node.parentNode;
+              if (node && node.style) { node.style.background = GRAY; done++; }
+              break;
+            }
+          }
+
+          var combos = document.getElementById('combos');
+          if (combos) { combos.style.background = GRAY; done++; }
+
+          var guarantee = document.getElementById('guarantee-section');
+          if (guarantee) { guarantee.style.background = GRAY; done++; }
+
+          return done >= 3;
+        }
+        var grayGuard = setInterval(function() {
+          if (applyGrayBg()) clearInterval(grayGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(grayGuard); }, 15000);
+      })();
+    </script>
 </body></html>
