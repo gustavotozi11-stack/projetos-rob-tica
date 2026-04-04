@@ -852,6 +852,11 @@
                 var paras = section.querySelectorAll('p');
                 for (var p = 0; p < paras.length; p++) {
                   paras[p].style.marginBottom = '4px';
+                  if ((paras[p].textContent || '').indexOf('Educa') !== -1) {
+                    paras[p].style.marginBottom = '0';
+                    var textBlock = paras[p].parentNode;
+                    if (textBlock) textBlock.style.marginBottom = '8px';
+                  }
                 }
                 headings[i].style.marginBottom = '4px';
               }
