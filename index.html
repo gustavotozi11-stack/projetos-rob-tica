@@ -783,6 +783,12 @@
                 if (section && !section.dataset.credSpaced) {
                   section.dataset.credSpaced = '1';
                   section.style.paddingBottom = '0';
+                  if (!document.getElementById('cred-spacer')) {
+                    var credSpacer = document.createElement('div');
+                    credSpacer.id = 'cred-spacer';
+                    credSpacer.style.cssText = 'height:64px;';
+                    section.appendChild(credSpacer);
+                  }
                 }
               }
               return true;
