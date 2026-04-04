@@ -46,6 +46,7 @@
           for (var i = 0; i < els.length; i++) {
             var cls = els[i].className;
             if (typeof cls !== 'string') continue;
+            if (els[i].id === 'combos') continue;
             var hasBgColor = cls.includes('from-purple-50') || cls.includes('from-gray-50') || cls.includes('from-blue-50') || cls.includes('to-purple-50') || cls.includes('to-blue-50') || cls.includes('to-orange-50') || cls.includes('from-white') || cls.includes('bg-gray-50') || cls.includes('bg-blue-50') || cls.includes('bg-purple-50') || cls.includes('bg-slate-50');
             var isSectionBg = hasBgColor && (cls.includes('py-') || cls.includes('overflow-hidden')) && !cls.includes('rounded') && !cls.includes('text-') && !cls.includes('px-12');
             if (isSectionBg) {
@@ -1119,9 +1120,9 @@
           var combos = document.getElementById('combos');
           if (combos) {
             combos.style.background = GRAY;
+            combos.style.backgroundImage = 'none';
             combos.style.paddingBottom = '0';
             combos.style.marginBottom = '0';
-            // also gray any sibling between combos and guarantee
             var sib = combos.nextSibling;
             while (sib && sib.id !== 'guarantee-section') {
               if (sib.style) sib.style.background = GRAY;
@@ -1133,11 +1134,33 @@
           var guarantee = document.getElementById('guarantee-section');
           if (guarantee) {
             guarantee.style.background = GRAY;
+            guarantee.style.backgroundImage = 'none';
             guarantee.style.marginTop = '0';
             done++;
           }
 
-          return done >= 2;
+          // Gray the orange CTA "oferta" section (from-orange-500 via-red-500 to-pink-500)
+          var allDivs = document.querySelectorAll('div');
+          for (var i = 0; i < allDivs.length; i++) {
+            var cls = allDivs[i].className || '';
+            if (cls.indexOf('from-orange-500') !== -1 && cls.indexOf('via-red-500') !== -1 && !allDivs[i].dataset.grayOferta) {
+              allDivs[i].dataset.grayOferta = '1';
+              allDivs[i].style.background = GRAY;
+              allDivs[i].style.backgroundImage = 'none';
+              // Fix text colors inside this section so they remain readable
+              var whiteEls = allDivs[i].querySelectorAll('*');
+              for (var j = 0; j < whiteEls.length; j++) {
+                var elCls = whiteEls[j].className || '';
+                if (elCls.indexOf('text-white') !== -1) {
+                  whiteEls[j].style.color = '#1a1a2e';
+                }
+              }
+              done++;
+              break;
+            }
+          }
+
+          return done >= 3;
         }
         var grayGuard = setInterval(function() {
           if (applyGrayBg()) clearInterval(grayGuard);
