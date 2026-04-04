@@ -850,7 +850,14 @@
                   imgs[im].style.objectFit = 'cover';
                   imgs[im].src = '/images/prof-ana-silva.png';
                   var imgParent = imgs[im].parentNode;
-                  if (imgParent) imgParent.style.marginTop = '8px';
+                  if (imgParent) {
+                    imgParent.style.marginTop = '0';
+                    imgParent.style.paddingTop = '0';
+                    if (imgParent.parentNode) {
+                      imgParent.parentNode.style.marginTop = '0';
+                      imgParent.parentNode.style.paddingTop = '0';
+                    }
+                  }
                 }
                 headings[i].style.marginBottom = '4px';
               }
