@@ -1086,6 +1086,9 @@
             }
           ];
 
+          var guarantee = document.getElementById('guarantee-section');
+          if (!guarantee) return false;
+
           var section = document.createElement('div');
           section.id = 'faq-section';
           section.style.cssText = 'background:#fff;padding:48px 16px 64px;';
@@ -1105,7 +1108,7 @@
 
           html += '</div>';
           section.innerHTML = html;
-          root.appendChild(section);
+          guarantee.parentNode.insertBefore(section, guarantee.nextSibling);
           return true;
         }
 
