@@ -869,8 +869,9 @@
                     paras[p].style.marginBottom = '0';
                     paras[p].style.paddingBottom = '0';
                     paras[p].style.fontSize = '0.9rem';
-                    var node = paras[p].parentNode;
-                    while (node && node !== section) {
+                    var node = paras[p];
+                    for (var lvl = 0; lvl < 8; lvl++) {
+                      if (!node || node.id === 'root') break;
                       node.style.marginBottom = '0';
                       node.style.paddingBottom = '0';
                       node.style.gap = '0';
