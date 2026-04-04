@@ -844,8 +844,8 @@
                 section.style.paddingBottom = '20px';
                 var imgs = section.querySelectorAll('img');
                 for (var im = 0; im < imgs.length; im++) {
-                  imgs[im].style.width = '120px';
-                  imgs[im].style.height = '120px';
+                  imgs[im].style.width = '90px';
+                  imgs[im].style.height = '90px';
                   imgs[im].style.borderRadius = '50%';
                   imgs[im].style.objectFit = 'cover';
                   imgs[im].src = '/images/prof-ana-silva.png';
@@ -860,6 +860,7 @@
                   }
                 }
                 headings[i].style.marginBottom = '4px';
+                headings[i].style.fontSize = '1.4rem';
               }
               if (section) {
                 var paras = section.querySelectorAll('p');
@@ -867,6 +868,7 @@
                   if ((paras[p].textContent || '').indexOf('Educa') !== -1) {
                     paras[p].style.marginBottom = '0';
                     paras[p].style.paddingBottom = '0';
+                    paras[p].style.fontSize = '0.9rem';
                     var node = paras[p].parentNode;
                     while (node && node !== section) {
                       node.style.marginBottom = '0';
