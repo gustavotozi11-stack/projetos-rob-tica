@@ -846,7 +846,14 @@
                 for (var im = 0; im < imgs.length; im++) {
                   imgs[im].style.width = '64px';
                   imgs[im].style.height = '64px';
+                  var imgParent = imgs[im].parentNode;
+                  if (imgParent) imgParent.style.marginTop = '8px';
                 }
+                var paras = section.querySelectorAll('p');
+                for (var p = 0; p < paras.length; p++) {
+                  paras[p].style.marginBottom = '4px';
+                }
+                headings[i].style.marginBottom = '4px';
               }
               return true;
             }
