@@ -829,20 +829,20 @@
           section.dataset.replaced = '1';
 
           var items = [
-            '<span style="color:#ff6b00;font-weight:600;">+100 projetos de robótica</span> <span style="color:#dc2626;font-weight:600;text-decoration:line-through;">R$49</span>',
+            '<span style="color:#faef00;font-weight:600;">+100 projetos de robótica</span> <span style="color:#f87171;font-weight:600;text-decoration:line-through;">R$49</span>',
             'Vídeo passo a passo de cada projeto',
             'Entrega imediata via E-mail',
-            '<span style="color:#ff6b00;font-weight:600;">Bônus: Guia de Robótica para Iniciantes</span> <span style="color:#dc2626;font-weight:600;text-decoration:line-through;">R$27</span>',
-            '<span style="color:#ff6b00;font-weight:600;">Bônus: 100 Truques de Mágica</span> <span style="color:#dc2626;font-weight:600;text-decoration:line-through;">R$17</span>',
-            '<span style="color:#ff6b00;font-weight:600;">Bônus: 27 Mágicas com Cartas</span> <span style="color:#dc2626;font-weight:600;text-decoration:line-through;">R$17</span>',
-            '<span style="color:#ff6b00;font-weight:600;">Bônus: Piadas Infantis</span> <span style="color:#dc2626;font-weight:600;text-decoration:line-through;">R$10</span>',
-            '<span style="color:#ff6b00;font-weight:600;">Bônus: 100 Atividades Criativas</span> <span style="color:#dc2626;font-weight:600;text-decoration:line-through;">R$27</span>',
+            '<span style="color:#faef00;font-weight:600;">Bônus: Guia de Robótica para Iniciantes</span> <span style="color:#f87171;font-weight:600;text-decoration:line-through;">R$27</span>',
+            '<span style="color:#faef00;font-weight:600;">Bônus: 100 Truques de Mágica</span> <span style="color:#f87171;font-weight:600;text-decoration:line-through;">R$17</span>',
+            '<span style="color:#faef00;font-weight:600;">Bônus: 27 Mágicas com Cartas</span> <span style="color:#f87171;font-weight:600;text-decoration:line-through;">R$17</span>',
+            '<span style="color:#faef00;font-weight:600;">Bônus: Piadas Infantis</span> <span style="color:#f87171;font-weight:600;text-decoration:line-through;">R$10</span>',
+            '<span style="color:#faef00;font-weight:600;">Bônus: 100 Atividades Criativas</span> <span style="color:#f87171;font-weight:600;text-decoration:line-through;">R$27</span>',
             'Suporte exclusivo via WhatsApp',
             'Acesso vitalício',
             'Garantia de 7 dias'
           ];
 
-          var CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15.5 9.5"/></svg>';
+          var CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15.5 9.5"/></svg>';
 
           var listHTML = items.map(function(item) {
             return '<li style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:1rem;">'
@@ -855,18 +855,18 @@
             + '  <h2 style="font-size:1.8rem;font-weight:900;color:#1a1a2e;text-transform:uppercase;letter-spacing:1px;margin:0;">GARANTA SEU KIT AGORA</h2>'
             + '</div>'
             + '<div style="max-width:480px;margin:0 auto;padding:16px;background:#f3f4f6;">'
-            + '  <div style="background:#f3f4f6;border-radius:24px;padding:36px 28px;color:#1a1a2e;box-shadow:0 8px 32px rgba(0,0,0,0.10);border:3px solid #e5e7eb;position:relative;">'
+            + '  <div style="background:linear-gradient(135deg,#6d28d9,#2563eb,#4338ca);border-radius:24px;padding:36px 28px;color:#fff;box-shadow:0 20px 60px rgba(99,60,219,0.4);border:3px solid #facc15;position:relative;">'
             + '    <div style="text-align:center;margin-bottom:20px;">'
             + ''
-            + '      <h2 style="font-size:1.6rem;font-weight:900;margin:0 0 4px;color:#1a1a2e;">Kit Robótica Kids</h2>'
-            + '      <div style="font-size:1.1rem;font-weight:600;color:#4b5563;margin-bottom:4px;">De <span style="color:#ef4444;text-decoration:line-through;">R$ 147</span> POR APENAS</div>'
-            + '      <div style="font-size:2.4rem;font-weight:900;color:#16a34a;margin:4px 0 12px;">R$ 27,90</div>'
+            + '      <h2 style="font-size:1.6rem;font-weight:900;margin:0 0 4px;">Kit Robótica Kids</h2>'
+            + '      <div style="font-size:1.1rem;font-weight:600;color:#fff;margin-bottom:4px;">De <span style="color:#f87171;text-decoration:line-through;">R$ 147</span> POR APENAS</div>'
+            + '      <div style="font-size:2.4rem;font-weight:900;color:#4ade80;margin:4px 0 12px;">R$ 27,90</div>'
             + '      <img src="/images/kit-combo.png" alt="Kit Robótica Kids" style="width:100%;max-width:380px;margin:0 auto;display:block;">'
             + '    </div>'
             + '    <ul style="list-style:none;margin:0 0 16px;padding:0;text-align:left;">' + listHTML + '</ul>'
-            + '    <div style="border-top:1px solid #d1d5db;padding-top:14px;margin-bottom:24px;text-align:center;">'
-            + '      <div style="font-size:1rem;font-weight:700;color:#ef4444;margin-bottom:6px;">Total: R$147,00</div>'
-            + '      <div style="font-size:1rem;font-weight:700;color:#16a34a;">Você está economizando R$119,10</div>'
+            + '    <div style="border-top:1px solid rgba(255,255,255,0.2);padding-top:14px;margin-bottom:24px;text-align:center;">'
+            + '      <div style="font-size:1rem;font-weight:700;color:#f87171;margin-bottom:6px;">Total: R$147,00</div>'
+            + '      <div style="font-size:1rem;font-weight:700;color:#4ade80;">Você está economizando R$119,10</div>'
             + '    </div>'
             + '    <div style="text-align:center;">'
             + '      <a href="https://pay.lowify.com.br/checkout?product_id=FCCDs2" target="_blank" rel="noopener noreferrer"'
