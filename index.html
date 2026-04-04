@@ -1116,26 +1116,13 @@
         function applyGrayBg() {
           var done = 0;
 
-          var heads = document.querySelectorAll('h2');
-          for (var i = 0; i < heads.length; i++) {
-            if ((heads[i].textContent || '').indexOf('Depoimentos de quem') !== -1) {
-              var node = heads[i].parentNode;
-              for (var up = 0; up < 8 && node && node.id !== 'root'; up++) {
-                var cls = node.className || '';
-                if (/\bpy-\d/.test(cls)) { node.style.background = GRAY; done++; break; }
-                node = node.parentNode;
-              }
-              break;
-            }
-          }
-
           var combos = document.getElementById('combos');
           if (combos) { combos.style.background = GRAY; done++; }
 
           var guarantee = document.getElementById('guarantee-section');
           if (guarantee) { guarantee.style.background = GRAY; done++; }
 
-          return done >= 3;
+          return done >= 2;
         }
         var grayGuard = setInterval(function() {
           if (applyGrayBg()) clearInterval(grayGuard);
