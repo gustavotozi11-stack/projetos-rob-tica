@@ -1117,10 +1117,25 @@
           var done = 0;
 
           var combos = document.getElementById('combos');
-          if (combos) { combos.style.background = GRAY; done++; }
+          if (combos) {
+            combos.style.background = GRAY;
+            combos.style.paddingBottom = '0';
+            combos.style.marginBottom = '0';
+            // also gray any sibling between combos and guarantee
+            var sib = combos.nextSibling;
+            while (sib && sib.id !== 'guarantee-section') {
+              if (sib.style) sib.style.background = GRAY;
+              sib = sib.nextSibling;
+            }
+            done++;
+          }
 
           var guarantee = document.getElementById('guarantee-section');
-          if (guarantee) { guarantee.style.background = GRAY; done++; }
+          if (guarantee) {
+            guarantee.style.background = GRAY;
+            guarantee.style.marginTop = '0';
+            done++;
+          }
 
           return done >= 2;
         }
