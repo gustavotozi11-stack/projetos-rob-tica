@@ -827,6 +827,50 @@
     </script>
     <script>
       (function() {
+        function shrinkAnaSilva() {
+          var headings = document.querySelectorAll('h2');
+          for (var i = 0; i < headings.length; i++) {
+            if ((headings[i].textContent || '').indexOf('Prof. Ana Silva') !== -1) {
+              var section = headings[i].parentNode;
+              while (section && section.id !== 'root') {
+                var par = section.parentNode;
+                if (!par || par.id === 'root') break;
+                if (par.children.length >= 2) break;
+                section = par;
+              }
+              if (section && !section.dataset.anaShrunk) {
+                section.dataset.anaShrunk = '1';
+                section.style.paddingTop = '20px';
+                section.style.paddingBottom = '20px';
+                headings[i].style.fontSize = '1.1rem';
+                var paras = section.querySelectorAll('p');
+                for (var p = 0; p < paras.length; p++) {
+                  paras[p].style.fontSize = '0.8rem';
+                  paras[p].style.lineHeight = '1.4';
+                }
+                var h3s = section.querySelectorAll('h3');
+                for (var h = 0; h < h3s.length; h++) {
+                  h3s[h].style.fontSize = '0.85rem';
+                }
+                var imgs = section.querySelectorAll('img');
+                for (var im = 0; im < imgs.length; im++) {
+                  imgs[im].style.width = '64px';
+                  imgs[im].style.height = '64px';
+                }
+              }
+              return true;
+            }
+          }
+          return false;
+        }
+        var shrinkGuard = setInterval(function() {
+          if (shrinkAnaSilva()) clearInterval(shrinkGuard);
+        }, 150);
+        setTimeout(function() { clearInterval(shrinkGuard); }, 15000);
+      })();
+    </script>
+    <script>
+      (function() {
         function replaceCombos() {
           var section = document.getElementById('combos');
           if (!section || section.dataset.replaced) return !!section;
