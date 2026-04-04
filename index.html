@@ -849,9 +849,11 @@
                   var imgParent = imgs[im].parentNode;
                   if (imgParent) imgParent.style.marginTop = '8px';
                 }
+                headings[i].style.marginBottom = '4px';
+              }
+              if (section) {
                 var paras = section.querySelectorAll('p');
                 for (var p = 0; p < paras.length; p++) {
-                  paras[p].style.marginBottom = '4px';
                   if ((paras[p].textContent || '').indexOf('Educa') !== -1) {
                     paras[p].style.marginBottom = '0';
                     paras[p].style.paddingBottom = '0';
@@ -859,11 +861,16 @@
                     while (node && node !== section) {
                       node.style.marginBottom = '0';
                       node.style.paddingBottom = '0';
+                      node.style.gap = '0';
+                      node.style.rowGap = '0';
+                      if (node.nextElementSibling) {
+                        node.nextElementSibling.style.marginTop = '0';
+                        node.nextElementSibling.style.paddingTop = '0';
+                      }
                       node = node.parentNode;
                     }
                   }
                 }
-                headings[i].style.marginBottom = '4px';
               }
               return true;
             }
@@ -874,6 +881,8 @@
           if (shrinkAnaSilva()) clearInterval(shrinkGuard);
         }, 150);
         setTimeout(function() { clearInterval(shrinkGuard); }, 15000);
+        setTimeout(shrinkAnaSilva, 1000);
+        setTimeout(shrinkAnaSilva, 2500);
       })();
     </script>
     <script>
