@@ -866,10 +866,10 @@
                 var paras = section.querySelectorAll('p');
                 for (var p = 0; p < paras.length; p++) {
                   if ((paras[p].textContent || '').indexOf('Educa') !== -1) {
-                    paras[p].style.marginBottom = '0';
+                    paras[p].style.marginBottom = '12px';
                     paras[p].style.paddingBottom = '0';
-                    paras[p].style.fontSize = '0.9rem';
-                    var node = paras[p];
+                    paras[p].style.fontSize = '1.05rem';
+                    var node = paras[p].parentNode;
                     for (var lvl = 0; lvl < 8; lvl++) {
                       if (!node || node.id === 'root') break;
                       node.style.marginBottom = '0';
