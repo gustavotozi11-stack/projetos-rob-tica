@@ -782,7 +782,7 @@
                 }
                 if (section && !section.dataset.credSpaced) {
                   section.dataset.credSpaced = '1';
-                  section.style.paddingBottom = '96px';
+                  section.style.paddingBottom = '120px';
                 }
               }
               return true;
@@ -842,6 +842,12 @@
                 section.dataset.anaShrunk = '1';
                 section.style.paddingTop = '40px';
                 section.style.paddingBottom = '80px';
+                if (!document.getElementById('ana-spacer')) {
+                  var spacer = document.createElement('div');
+                  spacer.id = 'ana-spacer';
+                  spacer.style.cssText = 'height:60px;background:inherit;';
+                  section.parentNode.insertBefore(spacer, section.nextSibling);
+                }
                 var imgs = section.querySelectorAll('img');
                 for (var im = 0; im < imgs.length; im++) {
                   imgs[im].style.width = '90px';
