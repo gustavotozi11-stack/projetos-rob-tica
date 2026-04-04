@@ -328,18 +328,12 @@
               break;
             }
           }
-          // Remove "CHEGA DIRETO NO SEU EMAIL" — target smallest element containing it
-          var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-          var node;
-          while ((node = walker.nextNode())) {
-            if ((node.nodeValue || '').indexOf('CHEGA DIRETO NO SEU EMAIL') !== -1) {
-              var target3 = node.parentElement;
-              // Walk up max 4 levels to get a block-level container
-              for (var up = 0; up < 4; up++) {
-                if (!target3 || !target3.parentElement || target3.parentElement.id === 'root') break;
-                target3 = target3.parentElement;
-              }
-              if (target3) { target3.style.display = 'none'; target3.remove(); }
+          // Remove "CHEGA DIRETO NO SEU EMAIL" — find smallest containing element, hide only it
+          var allEls = document.querySelectorAll('div, p, span, section');
+          for (var k = 0; k < allEls.length; k++) {
+            var elTxt = allEls[k].textContent || '';
+            if (elTxt.indexOf('CHEGA DIRETO NO SEU EMAIL') !== -1 && elTxt.length < 200) {
+              allEls[k].style.display = 'none';
               removed++;
               break;
             }
