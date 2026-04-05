@@ -1233,14 +1233,22 @@
           for (var i = 0; i < all.length; i++) {
             if (all[i].children.length === 0 &&
                 (all[i].textContent || '').trim() === 'ao desenvolvimento infantil') {
-              var card = all[i];
-              for (var up = 0; up < 4; up++) {
-                if (card.parentNode) card = card.parentNode;
+              var node = all[i];
+              var whiteCard = null;
+              for (var up = 0; up < 10; up++) {
+                if (!node.parentNode) break;
+                node = node.parentNode;
+                var cls = node.className || '';
+                if (cls.indexOf('rounded-3xl') !== -1 || cls.indexOf('bg-white') !== -1) {
+                  whiteCard = node;
+                  break;
+                }
               }
+              var target = whiteCard || node;
               var sp = document.createElement('div');
               sp.id = 'ded-spacer-v2';
-              sp.style.cssText = 'height:80px;width:100%;display:block;clear:both;';
-              card.parentNode && card.parentNode.insertBefore(sp, card.nextSibling);
+              sp.style.cssText = 'height:60px;width:100%;display:block;';
+              target.appendChild(sp);
               return;
             }
           }
