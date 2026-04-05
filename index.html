@@ -879,6 +879,10 @@
                     if (dedNode) {
                       dedNode.style.marginBottom = '80px';
                       dedNode.style.paddingBottom = '24px';
+                      if (dedNode.parentNode) {
+                        dedNode.parentNode.style.marginBottom = '80px';
+                        dedNode.parentNode.style.paddingBottom = '24px';
+                      }
                     }
                     break;
                   }
