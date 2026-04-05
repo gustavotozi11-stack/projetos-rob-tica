@@ -1227,6 +1227,29 @@
     </script>
     <script>
       (function() {
+        function forceDedSpacing() {
+          if (document.getElementById('ded-spacer-v2')) return;
+          var all = document.querySelectorAll('*');
+          for (var i = 0; i < all.length; i++) {
+            if (all[i].children.length === 0 &&
+                (all[i].textContent || '').trim() === 'ao desenvolvimento infantil') {
+              var card = all[i];
+              for (var up = 0; up < 4; up++) {
+                if (card.parentNode) card = card.parentNode;
+              }
+              var sp = document.createElement('div');
+              sp.id = 'ded-spacer-v2';
+              sp.style.cssText = 'height:80px;width:100%;display:block;clear:both;';
+              card.parentNode && card.parentNode.insertBefore(sp, card.nextSibling);
+              return;
+            }
+          }
+        }
+        [500, 1200, 2500].forEach(function(t) { setTimeout(forceDedSpacing, t); });
+      })();
+    </script>
+    <script>
+      (function() {
         var GRAY = '#f3f4f6';
         function applyGrayBg() {
           var done = 0;
