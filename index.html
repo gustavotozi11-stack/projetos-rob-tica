@@ -877,11 +877,14 @@
                   if (elTxt.indexOf('desenvolvimento infantil') !== -1 && allSectionEls[e].children.length === 0) {
                     var dedNode = allSectionEls[e].parentNode;
                     if (dedNode) {
-                      dedNode.style.marginBottom = '80px';
-                      dedNode.style.paddingBottom = '24px';
-                      if (dedNode.parentNode) {
-                        dedNode.parentNode.style.marginBottom = '80px';
-                        dedNode.parentNode.style.paddingBottom = '24px';
+                      dedNode.style.marginBottom = '0';
+                      dedNode.style.paddingBottom = '0';
+                      if (!document.getElementById('ded-spacer')) {
+                        var dedSpacer = document.createElement('div');
+                        dedSpacer.id = 'ded-spacer';
+                        dedSpacer.style.cssText = 'height:80px;width:100%;display:block;';
+                        var insertAfter = dedNode.parentNode || dedNode;
+                        insertAfter.parentNode && insertAfter.parentNode.insertBefore(dedSpacer, insertAfter.nextSibling);
                       }
                     }
                     break;
