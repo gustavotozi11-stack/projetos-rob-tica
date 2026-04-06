@@ -645,6 +645,11 @@
               btn.textContent = '🚀 QUERO ACESSAR AGORA';
               btn.onmouseover = function() { this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 32px rgba(255,107,0,0.55)'; };
               btn.onmouseout  = function() { this.style.transform='scale(1)';    this.style.boxShadow='0 6px 24px rgba(255,107,0,0.4)'; };
+              btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.getElementById('guarantee-section');
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              });
               // Insert description block after button
               if (!document.getElementById('btn-description-block')) {
                 var desc = document.createElement('p');
