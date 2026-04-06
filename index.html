@@ -424,7 +424,7 @@
           btn.onmouseout = function() { this.style.transform='scale(1)'; this.style.boxShadow='0 6px 24px rgba(255,107,0,0.4)'; };
           btn.onclick = function(e) {
             e.preventDefault();
-            var target = document.getElementById('guarantee-section');
+            var target = document.getElementById('garanta-kit-section') || document.getElementById('guarantee-section');
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           };
           btnWrapper.appendChild(btn);
@@ -647,7 +647,7 @@
               btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                var target = document.getElementById('guarantee-section');
+                var target = document.getElementById('garanta-kit-section') || document.getElementById('guarantee-section');
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }, true);
               // Insert description block after button
@@ -960,7 +960,7 @@
           }).join('');
 
           section.innerHTML = ''
-            + '<div style="text-align:center;padding:24px 16px 0;background:#f3f4f6;">'
+            + '<div id="garanta-kit-section" style="text-align:center;padding:24px 16px 0;background:#f3f4f6;">'
             + '  <h2 style="font-size:1.8rem;font-weight:900;color:#1a1a2e;text-transform:uppercase;letter-spacing:1px;margin:0;">GARANTA SEU KIT AGORA</h2>'
             + '</div>'
             + '<div style="max-width:480px;margin:0 auto;padding:16px;background:#f3f4f6;">'
