@@ -647,9 +647,10 @@
               btn.onmouseout  = function() { this.style.transform='scale(1)';    this.style.boxShadow='0 6px 24px rgba(255,107,0,0.4)'; };
               btn.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 var target = document.getElementById('guarantee-section');
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              });
+              }, true);
               // Insert description block after button
               if (!document.getElementById('btn-description-block')) {
                 var desc = document.createElement('p');
