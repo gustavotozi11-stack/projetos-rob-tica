@@ -1345,32 +1345,41 @@
     (function replaceImgWithVideo() {
       var IMG_SRC = 'EQQBsyz';
       var VIMEO_ID = '1181407999';
-      function doReplace() {
+      var replaced = false;
+
+      function swapImage(img) {
+        if (replaced) return;
+        replaced = true;
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:0 auto;max-width:640px;';
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://player.vimeo.com/video/' + VIMEO_ID + '?autoplay=0&title=0&byline=0&portrait=0';
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;';
+        wrapper.appendChild(iframe);
+        img.parentNode.insertBefore(wrapper, img);
+        img.parentNode.removeChild(img);
+      }
+
+      function scanAndReplace() {
         var imgs = document.querySelectorAll('img');
         for (var i = 0; i < imgs.length; i++) {
           if (imgs[i].src && imgs[i].src.indexOf(IMG_SRC) !== -1) {
-            var img = imgs[i];
-            var wrapper = document.createElement('div');
-            wrapper.style.cssText = 'position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;';
-            var iframe = document.createElement('iframe');
-            iframe.src = 'https://player.vimeo.com/video/' + VIMEO_ID + '?autoplay=0&title=0&byline=0&portrait=0';
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-            iframe.setAttribute('allowfullscreen', '');
-            iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;';
-            wrapper.appendChild(iframe);
-            var parent = img.parentNode;
-            parent.insertBefore(wrapper, img);
-            parent.removeChild(img);
+            swapImage(imgs[i]);
             return true;
           }
         }
         return false;
       }
-      if (!doReplace()) {
-        setTimeout(function() {
-          if (!doReplace()) { setTimeout(doReplace, 2500); }
-        }, 1000);
+
+      if (!scanAndReplace()) {
+        var observer = new MutationObserver(function() {
+          if (scanAndReplace()) { observer.disconnect(); }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        setTimeout(function() { observer.disconnect(); }, 15000);
       }
     })();
   </script>
