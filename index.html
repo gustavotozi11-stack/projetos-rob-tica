@@ -1335,6 +1335,36 @@
     </script>
     <script>
       (function() {
+        function removeHeroBadges() {
+          var removed = 0;
+          var all = document.querySelectorAll('*');
+          for (var i = 0; i < all.length; i++) {
+            var el = all[i];
+            // Only target elements with no child elements (leaf nodes) or those with only inline children
+            var childElementCount = el.children ? el.children.length : 0;
+            var ownText = (el.textContent || '').trim();
+
+            // Target the badge: exact text match on small elements (allow 1-2 children for icon + text)
+            if (childElementCount <= 2 && (ownText === '🚀 OFERTA LIMITADA!' || ownText === 'OFERTA LIMITADA!')) {
+              el.style.display = 'none';
+              removed++;
+            }
+            // Target "MAIS DE +100 PROJETOS" - small element, specific text, no big containers
+            if (childElementCount <= 2 && ownText.indexOf('MAIS DE') !== -1 && ownText.indexOf('100 PROJETOS') !== -1 && ownText.length < 40) {
+              el.style.display = 'none';
+              removed++;
+            }
+          }
+          return removed >= 2;
+        }
+        var badgeGuard = setInterval(function() {
+          if (removeHeroBadges()) clearInterval(badgeGuard);
+        }, 100);
+        setTimeout(function() { clearInterval(badgeGuard); }, 15000);
+      })();
+    </script>
+    <script>
+      (function() {
         function replaceHeroImageWithVideo() {
           var imgs = document.querySelectorAll('img');
           for (var i = 0; i < imgs.length; i++) {
